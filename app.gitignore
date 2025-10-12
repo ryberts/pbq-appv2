@@ -1,5 +1,0 @@
-# Ignore temporary data
-data/
-__pycache__/
-*.pyc
-.streamlit/
