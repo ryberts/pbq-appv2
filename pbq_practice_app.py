@@ -13,7 +13,7 @@ SHOW_BUILDER = True
 
 # Page configuration
 st.set_page_config(
-    page_title="PBQ Time",
+    page_title="Yoshi, ikou!",
     page_icon="👺",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -89,32 +89,49 @@ def save_question_bank():
         return False
 
 def load_question_bank():
-    """Load question bank from JSON file"""
+    """Load question bank from JSON file - with GitHub backup fallback"""
     try:
         file_path = 'data/question_bank.json'
+        backup_path = 'backup_questions/pbq_questions.json'  # GitHub backup
         
-        if not os.path.exists(file_path):
-            st.sidebar.warning("⚠️ Question bank file not found")
-            return []
+        # Try loading from data folder first
+        if os.path.exists(file_path):
+            file_size = os.path.getsize(file_path)
+            if file_size > 0:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read().strip()
+                    
+                    if content:
+                        data = json.loads(content)
+                        if isinstance(data, list) and len(data) > 0:
+                            if SHOW_BUILDER:
+                                st.sidebar.success(f"✅ Loaded {len(data)} questions from data/")
+                            return data
         
-        file_size = os.path.getsize(file_path)
-        if file_size == 0:
-            st.sidebar.warning("⚠️ Question bank file is empty")
-            return []
+        # Fallback: Try loading from GitHub backup
+        if os.path.exists(backup_path):
+            with open(backup_path, 'r', encoding='utf-8') as f:
+                content = f.read().strip()
+                
+                if content:
+                    data = json.loads(content)
+                    if isinstance(data, list) and len(data) > 0:
+                        st.sidebar.info(f"📦 Loaded {len(data)} questions from backup")
+                        
+                        # Save to data folder for future use
+                        os.makedirs('data', exist_ok=True)
+                        with open(file_path, 'w', encoding='utf-8') as f_out:
+                            json.dump(data, f_out, indent=2, ensure_ascii=False)
+                        
+                        return data
         
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read().strip()
-            
-            if not content:
-                return []
-            
-            data = json.loads(content)
-            
-            # Debug info in builder mode
-            if SHOW_BUILDER:
-                st.sidebar.success(f"✅ Loaded {len(data)} questions")
-            
-            return data if isinstance(data, list) else []
+        # No questions found anywhere
+        if SHOW_BUILDER:
+            st.sidebar.warning("⚠️ No questions found")
+        else:
+            st.sidebar.error("❌ No questions available. Contact admin.")
+        
+        return []
                     
     except Exception as e:
         st.sidebar.error(f"❌ Error loading questions: {e}")
@@ -305,8 +322,16 @@ def calculate_detailed_results():
                 
                 if pbq_type == "Classification/Matching":
                     # Classification scoring
-                    matching_items = question.get('pbq_data', {}).get('matching_items', [])
-                    is_multi_select = question.get('pbq_data', {}).get('is_multi_select', False)
+                    pbq_data_q = question.get('pbq_data', {})
+                    use_different_options = pbq_data_q.get('use_different_options', False)
+                    
+                    if use_different_options:
+                        items_with_options = pbq_data_q.get('items_with_options', [])
+                        matching_items = [item['text'] for item in items_with_options]
+                    else:
+                        matching_items = pbq_data_q.get('matching_items', [])
+                    
+                    is_multi_select = pbq_data_q.get('is_multi_select', False)
                     correct_items = 0
                     
                     for idx, item_text in enumerate(matching_items):
@@ -423,7 +448,7 @@ def calculate_detailed_results():
 
 def render_practice_mode():
     """Render the practice mode interface"""
-    st.header("You Shall Pass!")
+    st.header("🎯 Practice Mode")
     
     if not st.session_state.question_bank:
         st.warning("⚠️ No questions available. Please add questions first.")
@@ -556,6 +581,7 @@ def display_matching_pbq(question):
     pbq_data = question.get('pbq_data', {})
     current_index = st.session_state.current_question_index
     is_multi_select = pbq_data.get('is_multi_select', False)
+    use_different_options = pbq_data.get('use_different_options', False)
     
     # Display scenario image if available
     image_filename = question.get('scenario_image_filename')
@@ -563,7 +589,7 @@ def display_matching_pbq(question):
         try:
             image_path = os.path.join('data/images', image_filename)
             if os.path.exists(image_path):
-                st.image(image_path, caption="Scenario", use_container_width=True)
+                st.image(image_path, caption="Scenario", use_container_width=500)
         except Exception:
             pass
     
@@ -575,16 +601,15 @@ def display_matching_pbq(question):
         st.session_state.user_answers[current_index] = {}
     
     user_answers = st.session_state.user_answers[current_index]
-    matching_items = pbq_data.get('matching_items', [])
-    all_options = pbq_data.get('all_options', [])
     
-    # Shuffle options if enabled
-    if st.session_state.shuffle_options:
-        if f"shuffled_options_{current_index}" not in st.session_state:
-            st.session_state[f"shuffled_options_{current_index}"] = random.sample(all_options, len(all_options))
-        display_options = st.session_state[f"shuffled_options_{current_index}"]
+    # Handle both old and new format
+    if use_different_options:
+        items_with_options = pbq_data.get('items_with_options', [])
     else:
-        display_options = all_options
+        # Old format compatibility
+        matching_items = pbq_data.get('matching_items', [])
+        all_options = pbq_data.get('all_options', [])
+        items_with_options = [{'text': item, 'options': all_options} for item in matching_items]
     
     answer_changed = False
     
@@ -593,9 +618,21 @@ def display_matching_pbq(question):
     if is_multi_select:
         st.caption("💡 Select all that apply for each item")
     
-    for i, item in enumerate(matching_items):
+    for i, item_data in enumerate(items_with_options):
+        item_text = item_data['text']
+        item_options = item_data['options']
+        
+        # Shuffle options if enabled
+        if st.session_state.shuffle_options:
+            shuffle_key = f"shuffled_options_{current_index}_{i}"
+            if shuffle_key not in st.session_state:
+                st.session_state[shuffle_key] = random.sample(item_options, len(item_options))
+            display_options = st.session_state[shuffle_key]
+        else:
+            display_options = item_options
+        
         with st.container():
-            st.markdown(f"**{i+1}.** {item}")
+            st.markdown(f"**{i+1}.** {item_text}")
             
             if is_multi_select:
                 # Multi-select with checkboxes
@@ -646,7 +683,7 @@ def display_matching_pbq(question):
         st.rerun()
     
     # Progress indicator
-    total_items = len(matching_items)
+    total_items = len(items_with_options)
     if is_multi_select:
         answered_items = sum(1 for i in range(total_items) if user_answers.get(str(i)))
     else:
@@ -830,18 +867,27 @@ def render_question_navigation():
         pbq_type = question.get('type', '').replace('PBQ - ', '')
         
         if pbq_type == "Classification/Matching":
-            matching_items = question.get('pbq_data', {}).get('matching_items', [])
-            is_multi_select = question.get('pbq_data', {}).get('is_multi_select', False)
+            pbq_data = question.get('pbq_data', {})
+            use_different_options = pbq_data.get('use_different_options', False)
+            
+            if use_different_options:
+                items_with_options = pbq_data.get('items_with_options', [])
+                total_items = len(items_with_options)
+            else:
+                matching_items = pbq_data.get('matching_items', [])
+                total_items = len(matching_items)
+            
+            is_multi_select = pbq_data.get('is_multi_select', False)
             
             if is_multi_select:
                 # For multi-select, check if each item has at least one answer
                 all_answered = all(
                     user_answer.get(str(i)) and len(user_answer.get(str(i), [])) > 0 
-                    for i in range(len(matching_items))
+                    for i in range(total_items)
                 )
             else:
                 # For single select, check if all items have an answer
-                all_answered = all(user_answer.get(str(i)) for i in range(len(matching_items)))
+                all_answered = all(user_answer.get(str(i)) for i in range(total_items))
         
         elif pbq_type == "Firewall Rules":
             firewall_rules = question.get('pbq_data', {}).get('firewall_rules', [])
@@ -877,6 +923,7 @@ def render_question_navigation():
             if st.button("✅ Submit", type="primary", key="submit_btn", use_container_width=True, disabled=not all_answered):
                 if all_answered:
                     end_practice_session()
+
 
 def display_session_summary():
     """Display detailed session summary with item-by-item breakdown"""
@@ -1024,7 +1071,6 @@ def display_session_summary():
         st.session_state.current_question_index = 0
         st.session_state.detailed_results = []
         st.rerun()("Needs Improvement")
-    
 
 
 # ============================================================================
@@ -1079,73 +1125,153 @@ def render_matching_builder():
     )
     is_multi_select = "Multi-Select" in answer_type
     
-    col1, col2 = st.columns(2)
+    # NEW: Options mode selection
+    st.markdown("### Options Mode")
+    options_mode = st.radio(
+        "How should options be displayed?",
+        ["Same options for all items", "Different options per item"],
+        help="Same: All items share the same option pool | Different: Each item has unique options",
+        key="options_mode_radio"
+    )
+    use_different_options = "Different" in options_mode
     
-    with col1:
-        st.markdown("### Available Options")
-        all_options = st.text_area(
-            "All Available Options (one per line)",
-            "On-path\nKeylogger\nRootkit\nInjection\nRFID cloning\nVishing\nDDoS\nSupply chain",
-            height=200,
-            key="matching_options"
-        )
-    
-    with col2:
-        st.markdown("### Items to Match")
-        matching_items = st.text_area(
-            "Descriptions to Match (one per line)",
-            "Attacker obtains bank account number by calling victim\nAttacker accesses database from web browser\nAttacker intercepts client-server communication\nMultiple attackers overwhelm web server\nAttacker obtains login credentials",
-            height=200,
-            key="matching_items"
-        )
-    
-    st.markdown("---")
-    st.markdown("### Set Correct Answers")
-    
-    items_list = [item.strip() for item in matching_items.split('\n') if item.strip()]
-    options_list = [opt.strip() for opt in all_options.split('\n') if opt.strip()]
-    
-    correct_answers = {}
-    
-    for i, item in enumerate(items_list):
-        st.markdown(f"**{i+1}.** {item}")
+    if not use_different_options:
+        # ORIGINAL: Same options for all
+        col1, col2 = st.columns(2)
         
-        if is_multi_select:
-            # Multi-select with checkboxes
-            st.write("Select all that apply:")
-            selected_options = []
-            
-            cols = st.columns(min(3, len(options_list)))
-            for idx, opt in enumerate(options_list):
-                col_idx = idx % len(cols)
-                with cols[col_idx]:
-                    if st.checkbox(opt, key=f"matching_multi_correct_{i}_{idx}"):
-                        selected_options.append(opt)
-            
-            correct_answers[str(i)] = selected_options
-            
-            if selected_options:
-                st.info(f"✓ Selected: {', '.join(selected_options)}")
-            else:
-                st.warning("⚠️ No answers selected")
-        else:
-            # Single select dropdown
-            correct_answer = st.selectbox(
-                f"Correct match",
-                [""] + options_list,
-                key=f"matching_correct_{i}",
-                label_visibility="collapsed"
+        with col1:
+            st.markdown("### Available Options")
+            all_options = st.text_area(
+                "All Available Options (one per line)",
+                "On-path\nKeylogger\nRootkit\nInjection\nRFID cloning\nVishing\nDDoS\nSupply chain",
+                height=200,
+                key="matching_options"
             )
-            correct_answers[str(i)] = correct_answer
+        
+        with col2:
+            st.markdown("### Items to Match")
+            matching_items = st.text_area(
+                "Descriptions to Match (one per line)",
+                "Attacker obtains bank account number by calling victim\nAttacker accesses database from web browser\nAttacker intercepts client-server communication\nMultiple attackers overwhelm web server\nAttacker obtains login credentials",
+                height=200,
+                key="matching_items"
+            )
+        
+        st.markdown("---")
+        st.markdown("### Set Correct Answers")
+        
+        items_list = [item.strip() for item in matching_items.split('\n') if item.strip()]
+        options_list = [opt.strip() for opt in all_options.split('\n') if opt.strip()]
+        
+        correct_answers = {}
+        items_with_options = []
+        
+        for i, item in enumerate(items_list):
+            st.markdown(f"**{i+1}.** {item}")
+            
+            if is_multi_select:
+                st.write("Select all that apply:")
+                selected_options = []
+                
+                cols = st.columns(min(3, len(options_list)))
+                for idx, opt in enumerate(options_list):
+                    col_idx = idx % len(cols)
+                    with cols[col_idx]:
+                        if st.checkbox(opt, key=f"matching_multi_correct_{i}_{idx}"):
+                            selected_options.append(opt)
+                
+                correct_answers[str(i)] = selected_options
+                
+                if selected_options:
+                    st.info(f"✓ Selected: {', '.join(selected_options)}")
+                else:
+                    st.warning("⚠️ No answers selected")
+            else:
+                correct_answer = st.selectbox(
+                    f"Correct match",
+                    [""] + options_list,
+                    key=f"matching_correct_{i}",
+                    label_visibility="collapsed"
+                )
+                correct_answers[str(i)] = correct_answer
+            
+            items_with_options.append({
+                'text': item,
+                'options': options_list
+            })
+    
+    else:
+        # NEW: Different options per item
+        st.markdown("### Items and Options")
+        st.info("💡 Configure each item with its own set of options")
+        
+        num_items = st.number_input("Number of Items", min_value=1, max_value=20, value=3, key="num_items_different")
+        
+        correct_answers = {}
+        items_with_options = []
+        
+        for i in range(num_items):
+            with st.expander(f"📋 Item {i+1}", expanded=True):
+                item_text = st.text_area(
+                    f"Item {i+1} Description",
+                    f"Description for item {i+1}",
+                    height=60,
+                    key=f"item_text_{i}"
+                )
+                
+                item_options = st.text_area(
+                    f"Options for Item {i+1} (one per line)",
+                    "Option 1\nOption 2\nOption 3\nOption 4",
+                    height=100,
+                    key=f"item_options_{i}"
+                )
+                
+                options_list = [opt.strip() for opt in item_options.split('\n') if opt.strip()]
+                
+                st.markdown("**Set Correct Answer:**")
+                
+                if is_multi_select:
+                    st.write("Select all that apply:")
+                    selected_options = []
+                    
+                    cols = st.columns(min(3, len(options_list)))
+                    for idx, opt in enumerate(options_list):
+                        col_idx = idx % len(cols)
+                        with cols[col_idx]:
+                            if st.checkbox(opt, key=f"diff_multi_correct_{i}_{idx}"):
+                                selected_options.append(opt)
+                    
+                    correct_answers[str(i)] = selected_options
+                    
+                    if selected_options:
+                        st.success(f"✓ Selected: {', '.join(selected_options)}")
+                else:
+                    correct_answer = st.selectbox(
+                        "Correct answer",
+                        [""] + options_list,
+                        key=f"diff_correct_{i}"
+                    )
+                    correct_answers[str(i)] = correct_answer
+                
+                items_with_options.append({
+                    'text': item_text,
+                    'options': options_list
+                })
     
     st.markdown("---")
     
     if st.button("💾 Save PBQ", type="primary", key="save_matching", use_container_width=True):
         # Validation
+        if use_different_options:
+            missing = [i+1 for i in range(len(items_with_options)) if not items_with_options[i]['text'].strip()]
+            if missing:
+                st.error(f"❌ Please fill in descriptions for items: {missing}")
+                return
+        
         if is_multi_select:
-            missing = [i+1 for i, item in enumerate(items_list) if not correct_answers.get(str(i))]
+            missing = [i+1 for i in range(len(items_with_options)) if not correct_answers.get(str(i))]
         else:
-            missing = [i+1 for i, item in enumerate(items_list) if not correct_answers.get(str(i))]
+            missing = [i+1 for i in range(len(items_with_options)) if not correct_answers.get(str(i))]
         
         if missing:
             st.error(f"❌ Please set correct answers for items: {missing}")
@@ -1155,10 +1281,10 @@ def render_matching_builder():
             "instructions": instructions,
             "scenario_image": scenario_image.read() if scenario_image else None,
             "scenario_image_type": scenario_image.type if scenario_image else None,
-            "matching_items": items_list,
-            "all_options": options_list,
+            "items_with_options": items_with_options,
             "correct_answers": correct_answers,
-            "is_multi_select": is_multi_select
+            "is_multi_select": is_multi_select,
+            "use_different_options": use_different_options
         }
         
         save_pbq_question(pbq_data, "Classification/Matching")
@@ -1374,7 +1500,7 @@ def render_question_bank():
     st.header("📚 Question Bank")
     
     # Save status
-    col1, col2 = st.columns([2, 1])
+    col1, col2, col3 = st.columns([2, 1, 1])
     
     with col1:
         if os.path.exists('data/question_bank.json'):
@@ -1388,6 +1514,60 @@ def render_question_bank():
             if save_question_bank():
                 st.success("Saved!")
                 st.rerun()
+    
+    with col3:
+        # EXPORT BUTTON
+        if st.session_state.question_bank:
+            export_data = json.dumps(st.session_state.question_bank, indent=2, ensure_ascii=False)
+            st.download_button(
+                label="📥 Export",
+                data=export_data,
+                file_name=f"pbq_questions_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                mime="application/json",
+                key="export_btn",
+                use_container_width=True
+            )
+    
+    st.markdown("---")
+    
+    # IMPORT SECTION
+    with st.expander("📤 Import Questions", expanded=False):
+        st.info("Upload a previously exported question bank file to restore questions")
+        
+        uploaded_file = st.file_uploader(
+            "Choose JSON file",
+            type=['json'],
+            key="import_questions_file"
+        )
+        
+        if uploaded_file is not None:
+            try:
+                imported_data = json.load(uploaded_file)
+                
+                if isinstance(imported_data, list):
+                    st.success(f"✅ Found {len(imported_data)} questions in file")
+                    
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        if st.button("🔄 Replace All Questions", type="primary", key="replace_import"):
+                            st.session_state.question_bank = imported_data
+                            if save_question_bank():
+                                st.success(f"✅ Imported {len(imported_data)} questions!")
+                                st.balloons()
+                                st.rerun()
+                    
+                    with col2:
+                        if st.button("➕ Add to Existing", key="append_import"):
+                            st.session_state.question_bank.extend(imported_data)
+                            if save_question_bank():
+                                st.success(f"✅ Added {len(imported_data)} questions!")
+                                st.balloons()
+                                st.rerun()
+                else:
+                    st.error("❌ Invalid file format - expected a list of questions")
+            except Exception as e:
+                st.error(f"❌ Error reading file: {e}")
     
     st.markdown("---")
     
@@ -1489,7 +1669,7 @@ def main():
     initialize_session_state()
     
     # Sidebar navigation
-    st.sidebar.title("🛸 Yoshi, ikou!")
+    st.sidebar.title("🛸 PBQ Time")
     
     # Show question bank status
     question_count = len(st.session_state.question_bank)
