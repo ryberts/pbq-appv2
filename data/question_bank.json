@@ -62,5 +62,49 @@
     "scenario_image_filename": null,
     "scenario_image_type": null,
     "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the description with the most accurate attack type. Not all attack types will be used.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": "{\"0\": \"On-path\", \"1\": \"Supply chain\"}",
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the description with the most accurate attack type. Not all attack types will be used.",
+      "scenario_image_type": null,
+      "items_with_options": [
+        {
+          "text": "Attacker obtains bank account number by calling victim",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Supply chain"
+          ]
+        },
+        {
+          "text": "Attacker accesses database from web browsers",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Supply chain"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "On-path",
+        "1": "Supply chain"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
   }
 ]
