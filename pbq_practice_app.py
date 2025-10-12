@@ -9,7 +9,11 @@ import random
 # ============================================================================
 
 # Set to False to hide PBQ Builder and Question Bank (public deployment mode)
-SHOW_BUILDER = False
+SHOW_BUILDER = True
+
+# IMPORTANT: Set path to your backup questions file in GitHub
+# When deploying, put your exported questions here and commit to GitHub
+BACKUP_QUESTIONS_PATH = 'backup_questions/pbq_questions.json'
 
 # Page configuration
 st.set_page_config(
@@ -1071,7 +1075,7 @@ def display_session_summary():
         st.session_state.current_question_index = 0
         st.session_state.detailed_results = []
         st.rerun()("Needs Improvement")
-
+    
 
 # ============================================================================
 # PBQ BUILDER UI
@@ -1709,7 +1713,7 @@ def main():
     
     # Footer
     st.sidebar.markdown("---")
-    st.sidebar.caption("💡 Gambare! v2.0")
+    st.sidebar.caption("💡 Gambare v2.0")
     
     # File path info for debugging
     if SHOW_BUILDER:
