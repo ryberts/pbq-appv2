@@ -11,10 +11,6 @@ import random
 # Set to False to hide PBQ Builder and Question Bank (public deployment mode)
 SHOW_BUILDER = True
 
-# IMPORTANT: Set path to your backup questions file in GitHub
-# When deploying, put your exported questions here and commit to GitHub
-BACKUP_QUESTIONS_PATH = 'backup_questions/pbq_questions.json'
-
 # Page configuration
 st.set_page_config(
     page_title="Yoshi, ikou!",
@@ -80,7 +76,21 @@ def save_question_bank():
                 pbq_data_clean = question_clean['pbq_data'].copy()
                 if 'scenario_image' in pbq_data_clean:
                     del pbq_data_clean['scenario_image']
+                if 'scenario_image_type' in pbq_data_clean:
+                    del pbq_data_clean['scenario_image_type']
+                
+                # FIX: Ensure items_with_options is preserved correctly
+                if 'items_with_options' in pbq_data_clean:
+                    items = pbq_data_clean['items_with_options']
+                    # Don't JSON-stringify it, keep it as a list for the JSON encoder
+                    if not isinstance(items, list):
+                        pbq_data_clean['items_with_options'] = []
+                
                 question_clean['pbq_data'] = pbq_data_clean
+            
+            # Handle correct_answer - convert dict to JSON string for file storage
+            if isinstance(question_clean.get('correct_answer'), dict):
+                question_clean['correct_answer'] = json.dumps(question_clean['correct_answer'], ensure_ascii=False)
             
             question_bank_clean.append(question_clean)
         
@@ -98,6 +108,35 @@ def load_question_bank():
         file_path = 'data/question_bank.json'
         backup_path = 'backup_questions/pbq_questions.json'  # GitHub backup
         
+        def deserialize_questions(data):
+            """Deserialize and fix question format"""
+            for question in data:
+                # Convert correct_answer string back to dict if needed
+                if isinstance(question.get('correct_answer'), str):
+                    try:
+                        question['correct_answer'] = json.loads(question['correct_answer'])
+                    except json.JSONDecodeError:
+                        question['correct_answer'] = {}
+                
+                # FIX: Ensure pbq_data items_with_options is properly loaded
+                if 'pbq_data' in question and isinstance(question['pbq_data'], dict):
+                    pbq_data = question['pbq_data']
+                    
+                    # If items_with_options is stored as JSON string, deserialize it
+                    if 'items_with_options' in pbq_data:
+                        items = pbq_data['items_with_options']
+                        if isinstance(items, str):
+                            try:
+                                pbq_data['items_with_options'] = json.loads(items)
+                            except json.JSONDecodeError:
+                                pbq_data['items_with_options'] = []
+                    
+                    # Ensure it's a list and has proper structure
+                    if not isinstance(pbq_data.get('items_with_options'), list):
+                        pbq_data['items_with_options'] = []
+            
+            return data
+        
         # Try loading from data folder first
         if os.path.exists(file_path):
             file_size = os.path.getsize(file_path)
@@ -108,6 +147,7 @@ def load_question_bank():
                     if content:
                         data = json.loads(content)
                         if isinstance(data, list) and len(data) > 0:
+                            data = deserialize_questions(data)
                             if SHOW_BUILDER:
                                 st.sidebar.success(f"✅ Loaded {len(data)} questions from data/")
                             return data
@@ -120,6 +160,7 @@ def load_question_bank():
                 if content:
                     data = json.loads(content)
                     if isinstance(data, list) and len(data) > 0:
+                        data = deserialize_questions(data)
                         st.sidebar.info(f"📦 Loaded {len(data)} questions from backup")
                         
                         # Save to data folder for future use
@@ -180,6 +221,90 @@ def initialize_session_state():
     for var_name, default_value in session_vars.items():
         if var_name not in st.session_state:
             st.session_state[var_name] = default_value
+# Add this to your app right after the SESSION STATE INITIALIZATION section
+# This will help us see what's happening at each step
+
+def debug_question_bank():
+    """Debug function to check question bank state"""
+    st.write("DEBUG INFO:")
+    st.write(f"Question bank length: {len(st.session_state.question_bank)}")
+    st.write(f"Selected questions length: {len(st.session_state.selected_questions)}")
+    st.write(f"Practice started: {st.session_state.practice_started}")
+    
+    if st.session_state.question_bank:
+        st.write("\nQuestions in bank:")
+        for i, q in enumerate(st.session_state.question_bank):
+            st.write(f"  Q{i}: {q.get('type')} - is_pbq={q.get('is_pbq')}")
+    else:
+        st.write("Question bank is EMPTY!")
+    
+    if st.session_state.selected_questions:
+        st.write("\nSelected questions:")
+        for i, q in enumerate(st.session_state.selected_questions):
+            st.write(f"  Q{i}: {q.get('type')} - is_pbq={q.get('is_pbq')}")
+
+
+# REPLACE render_practice_mode() - COMPLETELY CLEAN
+def render_practice_mode():
+    """Render the practice mode interface"""
+    st.header("🎯 Practice Mode")
+    
+    if not st.session_state.question_bank:
+        st.warning("⚠️ No questions available. Please add questions first.")
+        if SHOW_BUILDER:
+            st.info("Go to PBQ Builder to create questions, then refresh this page.")
+        return
+    
+    if not st.session_state.practice_started:
+        render_practice_settings()
+    
+    st.markdown("---")
+    render_practice_controls()
+    
+    if st.session_state.practice_started and st.session_state.selected_questions:
+        display_current_question()
+    elif st.session_state.show_answers:
+        display_session_summary()
+
+
+def render_practice_settings():
+    """Render practice session settings"""
+    st.subheader("⚙️ Practice Session Settings")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        total_questions = len(st.session_state.question_bank)
+        
+        if total_questions == 0:
+            st.warning("No questions available")
+            st.session_state.selected_questions = []
+        elif total_questions == 1:
+            st.session_state.selected_questions = st.session_state.question_bank
+            st.info("1 question selected")
+        else:
+            question_count = st.slider(
+                "Number of Questions",
+                min_value=1,
+                max_value=total_questions,
+                value=min(10, total_questions),
+                key="question_count_slider"
+            )
+            st.session_state.selected_questions = st.session_state.question_bank[:question_count]
+    
+    with col2:
+        st.markdown("**Options:**")
+        st.session_state.shuffle_questions = st.checkbox(
+            "🔀 Shuffle Questions",
+            value=st.session_state.shuffle_questions,
+            key="shuffle_q"
+        )
+        st.session_state.shuffle_options = st.checkbox(
+            "🔀 Shuffle Options (per PBQ)",
+            value=st.session_state.shuffle_options,
+            key="shuffle_o"
+        )
+
 
 # ============================================================================
 # PRACTICE MODE FUNCTIONS
@@ -196,6 +321,7 @@ def start_practice_session():
     
     if not st.session_state.selected_questions:
         total_questions = len(st.session_state.question_bank)
+        
         if total_questions > 0:
             question_count = min(10, total_questions)
             st.session_state.selected_questions = st.session_state.question_bank[:question_count]
@@ -237,10 +363,14 @@ def calculate_real_time_score():
                 try:
                     correct_answers_raw = question.get('correct_answer', '{}')
                     
+                    # Handle both string and dict formats
                     if isinstance(correct_answers_raw, str):
-                        correct_answers = json.loads(correct_answers_raw)
+                        try:
+                            correct_answers = json.loads(correct_answers_raw) if correct_answers_raw else {}
+                        except json.JSONDecodeError:
+                            correct_answers = {}
                     else:
-                        correct_answers = correct_answers_raw
+                        correct_answers = correct_answers_raw if isinstance(correct_answers_raw, dict) else {}
                     
                     correct_items = 0
                     total_items = len(correct_answers)
@@ -248,7 +378,16 @@ def calculate_real_time_score():
                     if total_items > 0:
                         for item_key, correct_value in correct_answers.items():
                             user_value = user_answer.get(item_key)
-                            if user_value == correct_value:
+                            
+                            # Normalize values for comparison
+                            if isinstance(correct_value, list):
+                                correct_value = set(correct_value) if correct_value else set()
+                                user_value = set(user_value) if isinstance(user_value, list) else set([user_value] if user_value else [])
+                                is_correct = correct_value == user_value
+                            else:
+                                is_correct = user_value == correct_value
+                            
+                            if is_correct:
                                 correct_items += 1
                         
                         accuracy = correct_items / total_items
@@ -264,7 +403,8 @@ def calculate_real_time_score():
                         unanswered += 1
                         current_streak = 0
                         
-                except Exception:
+                except Exception as e:
+                    print(f"Error scoring question {i}: {e}")
                     incorrect += 1
                     current_streak = 0
             else:
@@ -296,6 +436,69 @@ def calculate_real_time_score():
         'accuracy': (correct / total_answered) * 100 if total_answered > 0 else 0
     }
 
+
+# FIX 2: Update save_pbq_question() to properly store answers
+def save_pbq_question(pbq_data: dict, pbq_type: str):
+    """Save PBQ question to question bank"""
+    pbq_data_clean = pbq_data.copy()
+    image_filename = None
+    scenario_image = pbq_data.get('scenario_image')
+    scenario_image_type = pbq_data.get('scenario_image_type')
+    
+    # Save image to file if it exists
+    if scenario_image and scenario_image_type:
+        os.makedirs('data/images', exist_ok=True)
+        
+        image_filename = f"pbq_image_{len(st.session_state.question_bank)}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        
+        extension_map = {
+            'image/png': '.png',
+            'image/jpeg': '.jpg',
+            'image/jpg': '.jpg'
+        }
+        extension = extension_map.get(scenario_image_type, '.png')
+        image_filename += extension
+        
+        image_path = os.path.join('data/images', image_filename)
+        with open(image_path, 'wb') as f:
+            f.write(scenario_image)
+    
+    # Remove image bytes from JSON data
+    if 'scenario_image' in pbq_data_clean:
+        del pbq_data_clean['scenario_image']
+    if 'scenario_image_type' in pbq_data_clean:
+        del pbq_data_clean['scenario_image_type']
+    
+    # FIX: Preserve is_multi_select flag at pbq_data level
+    is_multi_select = pbq_data.get('is_multi_select', False)
+    pbq_data_clean['is_multi_select'] = is_multi_select
+    
+    # FIX: Store correct_answers as dict (not JSON string)
+    correct_answers_dict = pbq_data.get("correct_answers", {})
+    
+    # Create question format
+    standard_question = {
+        "type": f"PBQ - {pbq_type}",
+        "scenario": f"PBQ Instructions: {pbq_data.get('instructions', 'Complete the exercise below')}",
+        "question": f"PBQ: {pbq_type}",
+        "options": ["Start PBQ Exercise"],
+        "correct_answer": correct_answers_dict,  # Store as dict, not JSON string
+        "explanation": "Performance-based question exercise",
+        "is_pbq": True,
+        "pbq_data": pbq_data_clean,
+        "scenario_image_filename": image_filename,
+        "scenario_image_type": scenario_image_type,
+        "has_scenario_image": scenario_image is not None
+    }
+    
+    st.session_state.question_bank.append(standard_question)
+    
+    if save_question_bank():
+        st.success(f"✅ PBQ saved! Question bank now has {len(st.session_state.question_bank)} questions.")
+        st.balloons()
+    else:
+        st.error("❌ Failed to save PBQ to file!")
+
 def calculate_detailed_results():
     """Calculate detailed results for each question with item-by-item breakdown"""
     st.session_state.detailed_results = []
@@ -319,6 +522,7 @@ def calculate_detailed_results():
         
         if question.get('is_pbq'):
             try:
+                # Properly deserialize correct_answer
                 if isinstance(correct_answer_raw, str):
                     correct_answers = json.loads(correct_answer_raw) if correct_answer_raw else {}
                 else:
@@ -328,17 +532,16 @@ def calculate_detailed_results():
                     # Classification scoring
                     pbq_data_q = question.get('pbq_data', {})
                     use_different_options = pbq_data_q.get('use_different_options', False)
-                    
-                    if use_different_options:
-                        items_with_options = pbq_data_q.get('items_with_options', [])
-                        matching_items = [item['text'] for item in items_with_options]
-                    else:
-                        matching_items = pbq_data_q.get('matching_items', [])
-                    
                     is_multi_select = pbq_data_q.get('is_multi_select', False)
-                    correct_items = 0
                     
-                    for idx, item_text in enumerate(matching_items):
+                    # Get items - always use items_with_options directly
+                    items_with_options = pbq_data_q.get('items_with_options', [])
+                    
+                    correct_items = 0
+                    total_items = len(items_with_options)
+                    
+                    for idx, item_data in enumerate(items_with_options):
+                        item_text = item_data.get('text', f"Item {idx+1}")
                         user_val = user_answer.get(str(idx), [] if is_multi_select else "") if user_answer else ([] if is_multi_select else "")
                         correct_val = correct_answers.get(str(idx), [] if is_multi_select else "")
                         
@@ -365,10 +568,10 @@ def calculate_detailed_results():
                         })
                     
                     result['score'] = correct_items
-                    result['total'] = len(matching_items)
+                    result['total'] = total_items
                     
                     # Question counts as correct if >= 50% correct
-                    if correct_items / len(matching_items) >= 0.5:
+                    if total_items > 0 and correct_items / total_items >= 0.5:
                         correct_count += 1
                         question_is_correct = True
                     else:
@@ -427,7 +630,7 @@ def calculate_detailed_results():
                     result['rows_total'] = len(firewall_rules)
                     
                     # Question counts as correct if >= 50% of fields correct
-                    if correct_fields / total_fields >= 0.5:
+                    if total_fields > 0 and correct_fields / total_fields >= 0.5:
                         correct_count += 1
                         question_is_correct = True
                     else:
@@ -456,6 +659,8 @@ def render_practice_mode():
     
     if not st.session_state.question_bank:
         st.warning("⚠️ No questions available. Please add questions first.")
+        if SHOW_BUILDER:
+            st.info("Go to PBQ Builder to create questions, then refresh this page.")
         return
     
     if not st.session_state.practice_started:
@@ -506,6 +711,7 @@ def render_practice_settings():
             value=st.session_state.shuffle_options,
             key="shuffle_o"
         )
+
 
 def render_practice_controls():
     """Render practice session control buttons"""
@@ -579,6 +785,8 @@ def display_pbq_question(question):
         display_matching_pbq(question)
     elif pbq_type == "Firewall Rules":
         display_firewall_pbq(question)
+    else:
+        st.error(f"Unknown PBQ type: '{pbq_type}'")
 
 def display_matching_pbq(question):
     """Display matching PBQ"""
@@ -594,8 +802,8 @@ def display_matching_pbq(question):
             image_path = os.path.join('data/images', image_filename)
             if os.path.exists(image_path):
                 st.image(image_path, caption="Scenario", use_container_width=500)
-        except Exception:
-            pass
+        except Exception as e:
+            st.warning(f"Could not load image: {e}")
     
     with st.container():
         st.info(f"📋 {pbq_data.get('instructions', 'Match the items below')}")
@@ -606,14 +814,13 @@ def display_matching_pbq(question):
     
     user_answers = st.session_state.user_answers[current_index]
     
-    # Handle both old and new format
-    if use_different_options:
-        items_with_options = pbq_data.get('items_with_options', [])
-    else:
-        # Old format compatibility
-        matching_items = pbq_data.get('matching_items', [])
-        all_options = pbq_data.get('all_options', [])
-        items_with_options = [{'text': item, 'options': all_options} for item in matching_items]
+    # FIX: Get items_with_options directly - it's always in the new format
+    items_with_options = pbq_data.get('items_with_options', [])
+    
+    if not items_with_options:
+        st.error("No items found in this PBQ!")
+        st.write(f"DEBUG: pbq_data = {pbq_data}")
+        return
     
     answer_changed = False
     
@@ -623,8 +830,8 @@ def display_matching_pbq(question):
         st.caption("💡 Select all that apply for each item")
     
     for i, item_data in enumerate(items_with_options):
-        item_text = item_data['text']
-        item_options = item_data['options']
+        item_text = item_data.get('text', f"Item {i+1}")
+        item_options = item_data.get('options', [])
         
         # Shuffle options if enabled
         if st.session_state.shuffle_options:
@@ -684,6 +891,7 @@ def display_matching_pbq(question):
     
     if answer_changed:
         st.session_state.user_answers[current_index] = user_answers.copy()
+        calculate_real_time_score()
         st.rerun()
     
     # Progress indicator
@@ -967,38 +1175,41 @@ def display_session_summary():
         score_val = result.get('score', 0)
         total_val = result.get('total', 0)
         
-        with st.expander(f"**PBQ{q_num} - {q_type}**: {result.get('instructions', '')} | Score: {score_val}/{total_val}", expanded=True):
+        with st.expander(f"**PBQ{q_num} - {q_type}**: {result.get('instructions', '')} | Score: {score_val}/{total_val}", expanded=False):
             
             if q_type == "Classification/Matching":
                 # Display classification results
-                for item in result['items']:
-                    is_multi = item.get('is_multi_select', False)
-                    
-                    # Format answers for display
-                    if is_multi:
-                        user_ans_display = ', '.join(item['user_answer']) if isinstance(item['user_answer'], list) else item['user_answer']
-                        correct_ans_display = ', '.join(item['correct_answer']) if isinstance(item['correct_answer'], list) else item['correct_answer']
-                    else:
-                        user_ans_display = item['user_answer']
-                        correct_ans_display = item['correct_answer']
-                    
-                    # Create compact container with icon
-                    with st.container():
-                        if item['is_correct']:
-                            st.markdown(f"""
-                            <div style="background-color: #1e4d2b; padding: 8px 12px; border-radius: 4px; margin: 4px 0; max-width: 800px;">
-                                <strong>✓ {item['number']}. Correct:</strong> {user_ans_display}
-                            </div>
-                            """, unsafe_allow_html=True)
-                        else:
-                            st.markdown(f"""
-                            <div style="background-color: #4d1e1e; padding: 8px 12px; border-radius: 4px; margin: 4px 0; max-width: 800px;">
-                                <strong>✗ {item['number']}. Wrong:</strong> {user_ans_display}<br>
-                                <strong>Correct Answer:</strong> {correct_ans_display}
-                            </div>
-                            """, unsafe_allow_html=True)
+                if result.get('items'):
+                    for item in result['items']:
+                        is_multi = item.get('is_multi_select', False)
                         
-                        st.caption(f"*{item['description']}*")
+                        # Format answers for display
+                        if is_multi:
+                            user_ans_display = ', '.join(item['user_answer']) if isinstance(item['user_answer'], list) and item['user_answer'] else "(not selected)"
+                            correct_ans_display = ', '.join(item['correct_answer']) if isinstance(item['correct_answer'], list) and item['correct_answer'] else "(none)"
+                        else:
+                            user_ans_display = item['user_answer'] if item['user_answer'] else "(not selected)"
+                            correct_ans_display = item['correct_answer'] if item['correct_answer'] else "(none)"
+                        
+                        # Create compact container with icon
+                        with st.container():
+                            if item['is_correct']:
+                                st.markdown(f"""
+                                <div style="background-color: #1e4d2b; padding: 8px 12px; border-radius: 4px; margin: 4px 0; max-width: 800px;">
+                                    <strong>✓ {item['number']}. Correct:</strong> {user_ans_display}
+                                </div>
+                                """, unsafe_allow_html=True)
+                            else:
+                                st.markdown(f"""
+                                <div style="background-color: #4d1e1e; padding: 8px 12px; border-radius: 4px; margin: 4px 0; max-width: 800px;">
+                                    <strong>✗ {item['number']}. Wrong:</strong> {user_ans_display}<br>
+                                    <strong>Correct Answer:</strong> {correct_ans_display}
+                                </div>
+                                """, unsafe_allow_html=True)
+                            
+                            st.caption(f"*{item['description']}*")
+                else:
+                    st.info("No item data to display")
             
             elif q_type == "Firewall Rules":
                 # Display firewall results
@@ -1068,13 +1279,13 @@ def display_session_summary():
     
     st.markdown("---")
     
-    if st.button("🔄 Start New Practice", type="primary", key="new_practice_session", use_container_width=True):
+    if st.button("📄 Start New Practice", type="primary", key="new_practice_session", use_container_width=True):
         st.session_state.practice_started = False
         st.session_state.show_answers = False
         st.session_state.user_answers = {}
         st.session_state.current_question_index = 0
         st.session_state.detailed_results = []
-        st.rerun()("Needs Improvement")
+        st.rerun()
     
 
 # ============================================================================
@@ -1713,7 +1924,7 @@ def main():
     
     # Footer
     st.sidebar.markdown("---")
-    st.sidebar.caption("💡 Gambare v2.0")
+    st.sidebar.caption("💡 Gambare 2.0")
     
     # File path info for debugging
     if SHOW_BUILDER:
