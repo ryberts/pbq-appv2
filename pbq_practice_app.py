@@ -9,7 +9,7 @@ import random
 # ============================================================================
 
 # Set to False to hide PBQ Builder and Question Bank (public deployment mode)
-SHOW_BUILDER = False
+SHOW_BUILDER = True
 
 # Page configuration
 st.set_page_config(
