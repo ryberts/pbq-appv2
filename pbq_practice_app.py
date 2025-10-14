@@ -2095,7 +2095,7 @@ def main():
     initialize_session_state()
     
     # Sidebar navigation
-    st.sidebar.title("PBQ Time")
+    st.sidebar.title("🛸 PBQ Time")
     
     # Show question bank status
     question_count = len(st.session_state.question_bank)
@@ -2111,7 +2111,7 @@ def main():
         st.sidebar.subheader("Getting Started")
         
         # STEP 1: Upload JSON + Load from Google Sheet
-        st.sidebar.markdown("**Step 1: Upload Questions & Load Images**")
+        st.sidebar.markdown("**Step 1: Upload Questions Here!**")
         
         with st.sidebar.container():
             # JSON file upload
@@ -2133,25 +2133,13 @@ def main():
                     st.sidebar.error(f"Error: {e}")
             
             # Load from Google Sheet
-            if st.button("Load Images from Google Sheet", type="primary", key="load_sheet_btn", use_container_width=True):
+            if st.button("Click To Start!", type="primary", key="load_sheet_btn", use_container_width=True):
                 with st.spinner("Loading images..."):
                     if apply_urls_from_sheet():
                         st.session_state['sheet_loaded'] = True
                         st.sidebar.success("Images loaded!")
                     else:
                         st.sidebar.error("Failed to load images")
-        
-        st.sidebar.markdown("---")
-        
-        # STEP 2: Confirm ready
-        st.sidebar.markdown("**Step 2: Ready to Start?**")
-        
-        if st.button("Click When Ready", type="secondary", key="ready_btn", use_container_width=True):
-            if len(st.session_state.question_bank) > 0:
-                st.session_state['user_ready'] = True
-                st.sidebar.success("Let's go! Start Practice Mode")
-            else:
-                st.sidebar.warning("Upload questions first (Step 1)")
         
         st.sidebar.markdown("---")
         
