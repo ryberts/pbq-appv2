@@ -2133,7 +2133,7 @@ def main():
                     st.sidebar.error(f"Error: {e}")
             
             # Load from Google Sheet
-            if st.button("Click To Start!", type="primary", key="load_sheet_btn", use_container_width=True):
+            if st.button("Step 2: Click To Start!", type="primary", key="load_sheet_btn", use_container_width=True):
                 with st.spinner("Loading images..."):
                     if apply_urls_from_sheet():
                         st.session_state['sheet_loaded'] = True
