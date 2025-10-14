@@ -3,6 +3,9 @@ import json
 import os
 from datetime import datetime
 import random
+import requests
+import csv
+from io import StringIO
 
 # ============================================================================
 # CONFIGURATION
@@ -48,6 +51,122 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# ============================================================================
+# GOOGLE SHEET CONFIGURATION
+# ============================================================================
+
+SHEET_ID = "1RQoQOlGETL97nVp5jHrhRrbycv7aD1een-gk8U8FgKw"
+SHEET_NAME = "pbq_sheet"
+
+def load_questions_from_google_sheet():
+    """Load image URLs from Google Sheet (public access)"""
+    try:
+        # Build CSV export URL for public Google Sheet
+        csv_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv"
+        
+        # Fetch the CSV data
+        response = requests.get(csv_url, timeout=10)
+        response.raise_for_status()
+        
+        # Parse CSV
+        reader = csv.DictReader(StringIO(response.text))
+        rows = list(reader)
+        
+        if not rows:
+            st.warning("Google Sheet is empty")
+            return None
+        
+        # Extract image URLs
+        image_urls = {}
+        count = 0
+        
+        for i, row in enumerate(rows):
+            # Get URL from 'Image URL' column
+            image_url = row.get('Image URL', '').strip()
+            
+            # Skip if empty or placeholder
+            if image_url and image_url != '[PASTE URL HERE]' and image_url.startswith('http'):
+                image_urls[f"question_index_{i}"] = image_url
+                count += 1
+        
+        if count > 0:
+            st.success(f"Found {count} image URLs in Google Sheet")
+        else:
+            st.warning("No valid image URLs found in Google Sheet")
+        
+        return image_urls if count > 0 else None
+        
+    except requests.exceptions.Timeout:
+        st.error("Google Sheet request timed out")
+        return None
+    except Exception as e:
+        st.error(f"Error loading from Google Sheet: {e}")
+        return None
+
+def apply_urls_from_sheet():
+    """Apply image URLs from Google Sheet to questions"""
+    try:
+        image_urls = load_questions_from_google_sheet()
+        
+        if not image_urls:
+            return False
+        
+        # Apply URLs to questions
+        applied_count = 0
+        
+        for idx, question in enumerate(st.session_state.question_bank):
+            image_url_key = f"question_index_{idx}"
+            if image_url_key in image_urls:
+                image_url = image_urls[image_url_key]
+                
+                # For PBQ questions, add to pbq_data
+                if question.get('is_pbq'):
+                    pbq_data = question.get('pbq_data', {})
+                    pbq_data['scenario_image_url'] = image_url
+                    question['pbq_data'] = pbq_data
+                
+                # Also add to top level
+                question['scenario_image_url'] = image_url
+                question['has_scenario_image'] = True
+                applied_count += 1
+        
+        # Save updated questions
+        if save_question_bank():
+            st.success(f"✅ Applied {applied_count} image URLs!")
+            st.balloons()
+            return True
+        else:
+            st.error("Failed to save questions")
+            return False
+            
+    except Exception as e:
+        st.error(f"Error applying URLs: {e}")
+        return False
+
+def render_sheet_loader():
+    """Render Google Sheet loader UI"""
+    st.subheader("📊 Load from Google Sheet")
+    
+    with st.expander("Google Sheet Integration", expanded=False):
+        st.info("""
+        **How it works:**
+        1. Your Google Sheet: https://docs.google.com/spreadsheets/d/1RQoQOlGETL97nVp5jHrhRrbycv7aD1een-gk8U8FgKw/
+        2. Add image URLs to the "Image URL" column
+        3. Click button below to load them automatically
+        4. Images appear in Practice Mode
+        """)
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if st.button("🔄 Load URLs from Google Sheet", type="primary", key="load_sheet_urls"):
+                with st.spinner("Loading from Google Sheet..."):
+                    if apply_urls_from_sheet():
+                        st.rerun()
+        
+        with col2:
+            st.caption("Sheet is shared publicly ✅")
 
 # ============================================================================
 # DATA PERSISTENCE FUNCTIONS
@@ -795,6 +914,16 @@ def display_matching_pbq(question):
     is_multi_select = pbq_data.get('is_multi_select', False)
     use_different_options = pbq_data.get('use_different_options', False)
     
+    # Display scenario image if available - CHECK URL FIRST
+    image_url = pbq_data.get('scenario_image_url') or question.get('scenario_image_url')
+    
+    if image_url:
+        try:
+            st.image(image_url, caption="Scenario", width=500)
+        except Exception as e:
+            st.warning(f"Could not load image: {e}")
+
+    
     # Display scenario image if available
     image_filename = question.get('scenario_image_filename')
     if image_filename:
@@ -912,6 +1041,15 @@ def display_firewall_pbq(question):
     """Display firewall rules PBQ"""
     pbq_data = question.get('pbq_data', {})
     current_index = st.session_state.current_question_index
+    
+    # Display scenario image if available - CHECK URL FIRST
+    image_url = pbq_data.get('scenario_image_url') or question.get('scenario_image_url')
+    
+    if image_url:
+        try:
+            st.image(image_url, caption="Network Diagram", width=500)
+        except Exception as e:
+            st.warning(f"Could not load image: {e}")
     
     # Display scenario image if available
     image_filename = question.get('scenario_image_filename')
@@ -1322,6 +1460,17 @@ def render_matching_builder():
     )
     
     st.markdown("---")
+
+    # Explanation text area
+    explanation = st.text_area(
+        "Explanation (Optional)",
+        "Provide a brief explanation for the correct answers...",
+        height=80,
+        key="matching_explanation",
+        help="This will be shown to users after they submit their answers"
+    )
+    
+    st.markdown("---")
     
     # Image upload
     scenario_image = st.file_uploader(
@@ -1494,12 +1643,14 @@ def render_matching_builder():
         
         pbq_data = {
             "instructions": instructions,
+            "explanation": explanation,  # ADD THIS LINE
             "scenario_image": scenario_image.read() if scenario_image else None,
             "scenario_image_type": scenario_image.type if scenario_image else None,
-            "items_with_options": items_with_options,
+            "matching_items": items_list,
+            "all_options": options_list,
             "correct_answers": correct_answers,
             "is_multi_select": is_multi_select,
-            "use_different_options": use_different_options
+            "use_different_options": False
         }
         
         save_pbq_question(pbq_data, "Classification/Matching")
@@ -1744,7 +1895,66 @@ def render_question_bank():
             )
     
     st.markdown("---")
+
+    render_sheet_loader()
     
+    st.markdown("---")
+    
+    # ADD IMAGE URLS SECTION
+    with st.expander("🖼️ Add Image URLs to Questions", expanded=False):
+        st.info("Use this to add Imgur/ImgBB URLs to your existing questions")
+        
+        num_urls = st.number_input(
+            "How many image URLs do you want to add?",
+            min_value=1,
+            max_value=len(st.session_state.question_bank) if st.session_state.question_bank else 1,
+            value=1,
+            key="num_image_urls"
+        )
+        
+        image_urls = {}
+        
+        for i in range(num_urls):
+            col1, col2 = st.columns([1, 3])
+            
+            with col1:
+                q_num = st.number_input(
+                    "Q#",
+                    min_value=1,
+                    max_value=len(st.session_state.question_bank) if st.session_state.question_bank else 1,
+                    value=i + 1,
+                    key=f"img_question_num_{i}"
+                )
+            
+            with col2:
+                url = st.text_input(
+                    "Image URL",
+                    placeholder="https://i.imgur.com/xxxxx.jpeg",
+                    key=f"img_url_{i}"
+                )
+                
+                if url and url.strip():
+                    image_urls[f"question_index_{q_num - 1}"] = url
+        
+        if st.button("✅ Apply Image URLs", type="primary", key="apply_urls_btn"):
+            if image_urls:
+                for idx, question in enumerate(st.session_state.question_bank):
+                    image_url_key = f"question_index_{idx}"
+                    if image_url_key in image_urls:
+                        image_url = image_urls[image_url_key]
+                        if question.get('is_pbq'):
+                            pbq_data = question.get('pbq_data', {})
+                            pbq_data['scenario_image_url'] = image_url
+                            question['pbq_data'] = pbq_data
+                        question['scenario_image_url'] = image_url
+                
+                if save_question_bank():
+                    st.success(f"✅ Added {len(image_urls)} image URLs!")
+                    st.balloons()
+                    st.rerun()
+    
+    st.markdown("---")
+
     # IMPORT SECTION
     with st.expander("📤 Import Questions", expanded=False):
         st.info("Upload a previously exported question bank file to restore questions")
