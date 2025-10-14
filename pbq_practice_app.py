@@ -12,7 +12,7 @@ from io import StringIO
 # ============================================================================
 
 # Set to False to hide PBQ Builder and Question Bank (public deployment mode)
-SHOW_BUILDER = True
+SHOW_BUILDER = False
 
 # Page configuration
 st.set_page_config(
@@ -2089,30 +2089,82 @@ def clear_all_questions():
 # MAIN APPLICATION
 # ============================================================================
 
+
 def main():
     """Main application entry point"""
     initialize_session_state()
     
     # Sidebar navigation
-    st.sidebar.title("🛸 PBQ Time")
+    st.sidebar.title("PBQ Time")
     
     # Show question bank status
     question_count = len(st.session_state.question_bank)
     if question_count > 0:
         st.sidebar.metric("Questions Available", question_count)
     else:
-        st.sidebar.warning("⚠️ No questions loaded")
+        st.sidebar.warning("No questions loaded")
     
     st.sidebar.markdown("---")
     
-    # Page selection based on SHOW_BUILDER flag
-    if SHOW_BUILDER:
-        page_options = ["Practice Mode", "PBQ Builder", "Question Bank"]
-        st.sidebar.info("🛠️ Admin Mode Active")
-    else:
+    # PUBLIC MODE (SHOW_BUILDER = False)
+    if not SHOW_BUILDER:
+        st.sidebar.subheader("Getting Started")
+        
+        # STEP 1: Upload JSON + Load from Google Sheet
+        st.sidebar.markdown("**Step 1: Upload Questions & Load Images**")
+        
+        with st.sidebar.container():
+            # JSON file upload
+            uploaded_file = st.file_uploader(
+                "Upload questions (.json)",
+                type=['json'],
+                key="public_import_json"
+            )
+            
+            if uploaded_file is not None:
+                try:
+                    imported_data = json.load(uploaded_file)
+                    
+                    if isinstance(imported_data, list):
+                        st.session_state.question_bank = imported_data
+                        if save_question_bank():
+                            st.sidebar.success(f"Loaded {len(imported_data)} questions!")
+                except Exception as e:
+                    st.sidebar.error(f"Error: {e}")
+            
+            # Load from Google Sheet
+            if st.button("Load Images from Google Sheet", type="primary", key="load_sheet_btn", use_container_width=True):
+                with st.spinner("Loading images..."):
+                    if apply_urls_from_sheet():
+                        st.session_state['sheet_loaded'] = True
+                        st.sidebar.success("Images loaded!")
+                    else:
+                        st.sidebar.error("Failed to load images")
+        
+        st.sidebar.markdown("---")
+        
+        # STEP 2: Confirm ready
+        st.sidebar.markdown("**Step 2: Ready to Start?**")
+        
+        if st.button("Click When Ready", type="secondary", key="ready_btn", use_container_width=True):
+            if len(st.session_state.question_bank) > 0:
+                st.session_state['user_ready'] = True
+                st.sidebar.success("Let's go! Start Practice Mode")
+            else:
+                st.sidebar.warning("Upload questions first (Step 1)")
+        
+        st.sidebar.markdown("---")
+        
+        # Show only Practice Mode
         page_options = ["Practice Mode"]
-        st.sidebar.success("👥 Public Mode Active")
+        st.sidebar.success("Public Mode Active")
     
+    # ADMIN MODE (SHOW_BUILDER = True)
+    else:
+        page_options = ["Practice Mode", "PBQ Builder", "Question Bank"]
+        st.sidebar.info("Admin Mode Active")
+    
+    # Page selection
     page = st.sidebar.radio(
         "Navigation",
         page_options,
@@ -2134,15 +2186,12 @@ def main():
     
     # Footer
     st.sidebar.markdown("---")
-    st.sidebar.caption("💡 Gambare 2.0")
+    st.sidebar.caption("Gambare 2.0")
     
-    # File path info for debugging
     if SHOW_BUILDER:
         if os.path.exists('data/question_bank.json'):
             file_size = os.path.getsize('data/question_bank.json')
-            st.sidebar.caption(f"📁 File: {file_size} bytes")
-        else:
-            st.sidebar.caption("📁 File: Not found")
+            st.sidebar.caption(f"File: {file_size} bytes")
 
 if __name__ == "__main__":
     main()
