@@ -1205,8 +1205,176 @@ def display_firewall_pbq(question):
     
     render_question_navigation()
 
+# Add this helper function to check and display instant results for a single question
+
+def show_instant_pbq_results(question, user_answer, current_index):
+    """Show immediate results for current PBQ question"""
+    pbq_type = question.get('type', '').replace('PBQ - ', '')
+    
+    st.markdown("---")
+    st.subheader("📊 Question Review")
+    
+    try:
+        correct_answer_raw = question.get('correct_answer')
+        
+        # Deserialize correct answers
+        if isinstance(correct_answer_raw, str):
+            correct_answers = json.loads(correct_answer_raw) if correct_answer_raw else {}
+        else:
+            correct_answers = correct_answer_raw or {}
+        
+        if pbq_type == "Classification/Matching":
+            pbq_data = question.get('pbq_data', {})
+            items_with_options = pbq_data.get('items_with_options', [])
+            is_multi_select = pbq_data.get('is_multi_select', False)
+            
+            correct_count = 0
+            total_count = len(items_with_options)
+            
+            st.markdown("### Your Answers vs Correct Answers")
+            
+            for idx, item_data in enumerate(items_with_options):
+                item_text = item_data.get('text', f"Item {idx+1}")
+                user_val = user_answer.get(str(idx), [] if is_multi_select else "")
+                correct_val = correct_answers.get(str(idx), [] if is_multi_select else "")
+                
+                # Check if correct
+                if is_multi_select:
+                    if not isinstance(user_val, list):
+                        user_val = [user_val] if user_val else []
+                    if not isinstance(correct_val, list):
+                        correct_val = [correct_val] if correct_val else []
+                    is_correct = set(user_val) == set(correct_val)
+                    user_display = ', '.join(user_val) if user_val else "(not selected)"
+                    correct_display = ', '.join(correct_val) if correct_val else "(none)"
+                else:
+                    is_correct = user_val == correct_val
+                    user_display = user_val if user_val else "(not selected)"
+                    correct_display = correct_val if correct_val else "(none)"
+                
+                if is_correct:
+                    correct_count += 1
+                
+                # Display result
+                if is_correct:
+                    st.markdown(f"""
+                    <div style="background-color: #1e4d2b; padding: 8px 12px; border-radius: 4px; margin: 4px 0;">
+                        <strong>✓ {idx+1}. Correct:</strong> {user_display}
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                    <div style="background-color: #4d1e1e; padding: 8px 12px; border-radius: 4px; margin: 4px 0;">
+                        <strong>✗ {idx+1}. Wrong:</strong> {user_display}<br>
+                        <strong>Correct Answer:</strong> {correct_display}
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                st.caption(f"*{item_text}*")
+            
+            # Summary
+            score_pct = (correct_count / total_count * 100) if total_count > 0 else 0
+            st.markdown("---")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Score", f"{correct_count}/{total_count}")
+            with col2:
+                st.metric("Percentage", f"{score_pct:.0f}%")
+            with col3:
+                if score_pct >= 80:
+                    st.success("Pass ✅")
+                else:
+                    st.error("Needs Review 📚")
+        
+        elif pbq_type == "Firewall Rules":
+            firewall_rules = question.get('pbq_data', {}).get('firewall_rules', [])
+            fields = ['rule', 'source_ip', 'dest_ip', 'protocol', 'port', 'action']
+            
+            correct_fields = 0
+            total_fields = len(firewall_rules) * len(fields)
+            correct_rows = 0
+            
+            st.markdown("### Firewall Rules Review")
+            
+            for rule_idx in range(len(firewall_rules)):
+                row_correct = 0
+                
+                st.markdown(f"**Rule {rule_idx + 1}:**")
+                
+                # User answer
+                st.markdown("**Your Answer:**")
+                cols = st.columns(6)
+                headers = ["Rule #", "Source IP", "Dest IP", "Protocol", "Port", "Action"]
+                
+                for idx, (col, header, field) in enumerate(zip(cols, headers, fields)):
+                    user_val = user_answer.get(f"{rule_idx}_{field}", "")
+                    correct_val = correct_answers.get(f"{rule_idx}_{field}", "")
+                    is_correct = user_val == correct_val
+                    
+                    if is_correct:
+                        row_correct += 1
+                        correct_fields += 1
+                    
+                    with col:
+                        st.markdown(f"<small><strong>{header}</strong></small>", unsafe_allow_html=True)
+                        if is_correct:
+                            st.markdown(f"""
+                            <div style="background-color: #1e4d2b; padding: 4px 8px; border-radius: 3px; text-align: center;">
+                                ✓ {user_val}
+                            </div>
+                            """, unsafe_allow_html=True)
+                        else:
+                            st.markdown(f"""
+                            <div style="background-color: #4d1e1e; padding: 4px 8px; border-radius: 3px; text-align: center;">
+                                ✗ {user_val}
+                            </div>
+                            """, unsafe_allow_html=True)
+                
+                # Correct answer
+                st.markdown("**Correct Answer:**")
+                cols = st.columns(6)
+                
+                for idx, (col, header, field) in enumerate(zip(cols, headers, fields)):
+                    correct_val = correct_answers.get(f"{rule_idx}_{field}", "")
+                    
+                    with col:
+                        st.markdown(f"<small><strong>{header}</strong></small>", unsafe_allow_html=True)
+                        st.markdown(f"""
+                        <div style="background-color: #1e3a4d; padding: 4px 8px; border-radius: 3px; text-align: center;">
+                            {correct_val}
+                        </div>
+                        """, unsafe_allow_html=True)
+                
+                if row_correct == len(fields):
+                    correct_rows += 1
+                
+                st.markdown(f"**Rule {rule_idx + 1} Score:** {row_correct}/{len(fields)}")
+                st.markdown("<div style='margin: 12px 0; border-top: 1px solid #444;'></div>", unsafe_allow_html=True)
+            
+            # Summary
+            score_pct = (correct_fields / total_fields * 100) if total_fields > 0 else 0
+            st.markdown("---")
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Fields Correct", f"{correct_fields}/{total_fields}")
+            with col2:
+                st.metric("Perfect Rows", f"{correct_rows}/{len(firewall_rules)}")
+            with col3:
+                st.metric("Percentage", f"{score_pct:.0f}%")
+            with col4:
+                if score_pct >= 80:
+                    st.success("Pass ✅")
+                else:
+                    st.error("Needs Review 📚")
+        
+    except Exception as e:
+        st.error(f"Error showing results: {e}")
+
+
+# UPDATE render_question_navigation() to add "Show Answers" button
+
 def render_question_navigation():
-    """Render question navigation buttons with validation"""
+    """Render question navigation buttons with validation and instant review"""
     current_index = st.session_state.current_question_index
     question = st.session_state.selected_questions[current_index]
     user_answer = st.session_state.user_answers.get(current_index, {})
@@ -1218,25 +1386,16 @@ def render_question_navigation():
         
         if pbq_type == "Classification/Matching":
             pbq_data = question.get('pbq_data', {})
-            use_different_options = pbq_data.get('use_different_options', False)
-            
-            if use_different_options:
-                items_with_options = pbq_data.get('items_with_options', [])
-                total_items = len(items_with_options)
-            else:
-                matching_items = pbq_data.get('matching_items', [])
-                total_items = len(matching_items)
-            
+            items_with_options = pbq_data.get('items_with_options', [])
+            total_items = len(items_with_options)
             is_multi_select = pbq_data.get('is_multi_select', False)
             
             if is_multi_select:
-                # For multi-select, check if each item has at least one answer
                 all_answered = all(
                     user_answer.get(str(i)) and len(user_answer.get(str(i), [])) > 0 
                     for i in range(total_items)
                 )
             else:
-                # For single select, check if all items have an answer
                 all_answered = all(user_answer.get(str(i)) for i in range(total_items))
         
         elif pbq_type == "Firewall Rules":
@@ -1250,8 +1409,16 @@ def render_question_navigation():
     else:
         all_answered = user_answer is not None and user_answer != ""
     
+    # Show instant results if enabled
+    if 'show_instant_results' not in st.session_state:
+        st.session_state.show_instant_results = {}
+    
+    show_results = st.session_state.show_instant_results.get(current_index, False)
+    
     st.markdown("---")
-    col1, col2, col3 = st.columns([1, 2, 1])
+    
+    # Navigation buttons
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
     
     with col1:
         if current_index > 0:
@@ -1261,7 +1428,13 @@ def render_question_navigation():
     
     with col2:
         if not all_answered:
-            st.warning("⚠️ Please answer all fields before proceeding")
+            st.warning("⚠️ Answer all fields")
+        else:
+            # NEW: Show Answers button for PBQs
+            if question.get('is_pbq'):
+                if st.button("📝 Show Answers", key="show_ans_btn", type="secondary", use_container_width=True):
+                    st.session_state.show_instant_results[current_index] = not show_results
+                    st.rerun()
     
     with col3:
         if current_index < len(st.session_state.selected_questions) - 1:
@@ -1269,11 +1442,16 @@ def render_question_navigation():
                 if all_answered:
                     st.session_state.current_question_index += 1
                     st.rerun()
-        else:
-            if st.button("✅ Submit", type="primary", key="submit_btn", use_container_width=True, disabled=not all_answered):
+    
+    with col4:
+        if current_index == len(st.session_state.selected_questions) - 1:
+            if st.button("✅ Submit All", type="primary", key="submit_btn", use_container_width=True, disabled=not all_answered):
                 if all_answered:
                     end_practice_session()
-
+    
+    # Display instant results if enabled
+    if show_results and all_answered:
+        show_instant_pbq_results(question, user_answer, current_index)
 
 def display_session_summary():
     """Display detailed session summary with item-by-item breakdown"""
