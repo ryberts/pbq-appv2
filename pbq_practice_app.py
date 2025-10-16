@@ -2090,12 +2090,14 @@ def clear_all_questions():
 # ============================================================================
 
 
+# Replace your main() function with this version
+
 def main():
     """Main application entry point"""
     initialize_session_state()
     
     # Sidebar navigation
-    st.sidebar.title("🛸 PBQ Time")
+    st.sidebar.title("PBQ Time")
     
     # Show question bank status
     question_count = len(st.session_state.question_bank)
@@ -2128,16 +2130,19 @@ def main():
                     if isinstance(imported_data, list):
                         st.session_state.question_bank = imported_data
                         if save_question_bank():
-                            st.sidebar.success(f"Loaded {len(imported_data)} questions!")
+                            st.sidebar.success(f"✅ Loaded {len(imported_data)} questions!,")
+                            st.sidebar.success(f"⚠️ REFRESH PAGE & Click Step:2 & START PRACTICE ⚠️")
+                            st.rerun()  # Force refresh after loading questions
                 except Exception as e:
                     st.sidebar.error(f"Error: {e}")
             
             # Load from Google Sheet
-            if st.button("Step 2: Click To Start!", type="primary", key="load_sheet_btn", use_container_width=True):
+            if st.button("Step: 2 Click To Start", type="primary", key="load_sheet_btn", use_container_width=True):
                 with st.spinner("Loading images..."):
                     if apply_urls_from_sheet():
                         st.session_state['sheet_loaded'] = True
                         st.sidebar.success("Images loaded!")
+                        st.rerun()  # Force page refresh to apply URLs
                     else:
                         st.sidebar.error("Failed to load images")
         
