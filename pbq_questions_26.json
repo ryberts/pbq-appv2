@@ -1,0 +1,2345 @@
+[
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: You work as a cybersecurity analyst for a regional law firm. Following a recent internal audit, management wants to align all IT policies with the CIA triad: confidentiality, integrity, and availability. \n\nYou’re tasked with reviewing a series of practices and determining which principle each one supports to guide future policy updates.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Availability",
+      "1": "Confidentiality",
+      "2": "Confidentiality",
+      "3": "Integrity"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "You work as a cybersecurity analyst for a regional law firm. Following a recent internal audit, management wants to align all IT policies with the CIA triad: confidentiality, integrity, and availability. \n\nYou’re tasked with reviewing a series of practices and determining which principle each one supports to guide future policy updates.",
+      "items_with_options": [
+        {
+          "text": "You’ve been asked to configure load balancing and failover between web servers. Which goal does this action address?",
+          "options": [
+            "Accountability",
+            "Confidentiality",
+            "Availability",
+            "Non-repudiation"
+          ]
+        },
+        {
+          "text": "To allow secure remote access for attorneys working offsite, you enforce VPN usage with encryption. What are you ensuring by taking this step?",
+          "options": [
+            "Accountability",
+            "Confidentiality",
+            "Integrity",
+            "Repudiation"
+          ]
+        },
+        {
+          "text": "You’re reviewing the firm’s data classification policy. What CIA principle are you supporting by restricting document access based on classification level?",
+          "options": [
+            "Accountability",
+            "Confidentiality",
+            "Integrity",
+            "Availablity"
+          ]
+        },
+        {
+          "text": "You implement digital signatures to confirm that legal forms haven’t been tampered with. Which security principle are you reinforcing?",
+          "options": [
+            "Auditability",
+            "Confidentiality",
+            "Integrity",
+            "Availability"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Availability",
+        "1": "Confidentiality",
+        "2": "Confidentiality",
+        "3": "Integrity"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_0_20251013_042929.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: As the newly appointed security officer for a large warehouse and distribution centre, you are tasked with cataloguing all existing security controls to ensure compliance with company policy and industry standards. \n\nThe facility has implemented a wide range of measures, including physical devices, employee training, and software protections. You’ve been asked to categorize each control by both its type (physical, administrative, or technical) and function (preventive, detective, or corrective) to complete the quarterly compliance report.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Physical\\Preventive",
+      "1": "Administrative\\Preventive",
+      "2": "Technical\\Preventive",
+      "3": "Physical\\Corrective"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "As the newly appointed security officer for a large warehouse and distribution centre, you are tasked with cataloguing all existing security controls to ensure compliance with company policy and industry standards. \n\nThe facility has implemented a wide range of measures, including physical devices, employee training, and software protections. You’ve been asked to categorize each control by both its type (physical, administrative, or technical) and function (preventive, detective, or corrective) to complete the quarterly compliance report.",
+      "items_with_options": [
+        {
+          "text": "You’re reviewing access badge logs. What classification should you assign to this control?",
+          "options": [
+            "Administrative\\Corrective",
+            "Physical\\Preventive",
+            "Technical\\Detective",
+            "Physical\\Corrective"
+          ]
+        },
+        {
+          "text": "You are updating the employee cybersecurity training content. How should you classify this control?",
+          "options": [
+            "Administrative\\Preventive",
+            "Physical\\Corrective",
+            "Technical\\Detective",
+            "Administrative\\Detective"
+          ]
+        },
+        {
+          "text": "You install antivirus software across all endpoints. What control type and function does this represent?",
+          "options": [
+            "Administrative\\Preventive",
+            "Physical\\Preventive",
+            "Technical\\Preventive",
+            "Administrative\\Corrective",
+            "Technical\\Detective"
+          ]
+        },
+        {
+          "text": "You verify that fire extinguishers are placed near all server areas. What classification should this receive?",
+          "options": [
+            "Administrative\\Preventive",
+            "Physical\\Preventive",
+            "Technical\\Corrective",
+            "Administrative\\Preventive",
+            "Physical\\Corrective"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Physical\\Preventive",
+        "1": "Administrative\\Preventive",
+        "2": "Technical\\Preventive",
+        "3": "Physical\\Corrective"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_1_20251013_043851.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: You are a security analyst at a financial services company. A user in the accounting department reports their machine has suddenly become sluggish, and strange pop-ups are appearing. Antivirus logs reveal the presence of a file named invoice_update.scr, flagged as malware. \nYou suspect the user fell victim to a Trojan attack embedded in a phishing email. Your team must act quickly to contain the threat and identify its nature and origin.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Isolate the affected machine from the network",
+      "1": "Trojan",
+      "2": "Review DNS logs",
+      "3": "Conduct phishing simulation training"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "You are a security analyst at a financial services company. A user in the accounting department reports their machine has suddenly become sluggish, and strange pop-ups are appearing. Antivirus logs reveal the presence of a file named invoice_update.scr, flagged as malware. \nYou suspect the user fell victim to a Trojan attack embedded in a phishing email. Your team must act quickly to contain the threat and identify its nature and origin.",
+      "items_with_options": [
+        {
+          "text": "What should you do first to prevent the malware from spreading?",
+          "options": [
+            "Restart the user's computer",
+            "Block the user's account in Active Directory",
+            "Isolate the affected machine from the network",
+            "Erase the email servers"
+          ]
+        },
+        {
+          "text": "Based on the file extension and behaviour, how would you classify this malware?",
+          "options": [
+            "Logic Bomb",
+            "Trojan",
+            "Ransomware",
+            "Worm"
+          ]
+        },
+        {
+          "text": "What action should you take to verify if other devices are communicating with the same malicious domain?",
+          "options": [
+            "Perform password reset",
+            "Review DNS logs",
+            "Update firmware",
+            "Format all servers"
+          ]
+        },
+        {
+          "text": "What mitigation would help prevent this type of incident in the future?",
+          "options": [
+            "Require screensavers on all computers",
+            "Disable usb ports",
+            "Conduct phishing simulation training",
+            "Block all image files"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Isolate the affected machine from the network",
+        "1": "Trojan",
+        "2": "Review DNS logs",
+        "3": "Conduct phishing simulation training"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_2_20251013_044458.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Your organization recently experienced a breach after an attacker posed as an IT technician and convinced a junior employee to reveal their login credentials over the phone. As the cybersecurity lead, you're tasked with identifying the type of social engineering attack, its typical indicators, and preventive actions for the future.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Pretexting",
+      "1": "The attacker created urgency and requested credentials",
+      "2": "Reset the compromised account's credentials",
+      "3": "Provide mandatory security awareness training"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Your organization recently experienced a breach after an attacker posed as an IT technician and convinced a junior employee to reveal their login credentials over the phone. As the cybersecurity lead, you're tasked with identifying the type of social engineering attack, its typical indicators, and preventive actions for the future.",
+      "items_with_options": [
+        {
+          "text": "Based on the attacker’s behaviour, what type of social engineering attack occurred?",
+          "options": [
+            "Shoulder surfing",
+            "Pretexting",
+            "Quid pro qou",
+            "Tailgating"
+          ]
+        },
+        {
+          "text": "What red flag should have alerted the intern to the attack?",
+          "options": [
+            "The attacker offered money",
+            "The attacker provide 2-factor codes",
+            "The attacker created urgency and requested credentials",
+            "The attacker emailed a PowerPoint file"
+          ]
+        },
+        {
+          "text": "What immediate action should you take to reduce the damage?",
+          "options": [
+            "Alert the ISP",
+            "Reset the compromised account's credentials",
+            "Disable the router",
+            "Reboot the user's machine"
+          ]
+        },
+        {
+          "text": "What long-term policy could help reduce future incidents like this?",
+          "options": [
+            "Disable auto-updates on all devices",
+            "Increase complexity requirements for all usernames",
+            "Provide mandatory security awareness training",
+            "Remove VoIP phone access"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Pretexting",
+        "1": "The attacker created urgency and requested credentials",
+        "2": "Reset the compromised account's credentials",
+        "3": "Provide mandatory security awareness training"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_3_20251013_045236.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: You are a security engineer for a mid-size company migrating its services to a more segmented network structure. Your goal is to increase security through proper zoning. The IT director has asked you to review the new architecture and verify that key assets are placed in appropriate zones, with correct defences between them.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "DMZ",
+      "1": "IPS",
+      "2": "443",
+      "3": "Place it on the internal LAN and block DMZ access to it"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "You are a security engineer for a mid-size company migrating its services to a more segmented network structure. Your goal is to increase security through proper zoning. The IT director has asked you to review the new architecture and verify that key assets are placed in appropriate zones, with correct defences between them.",
+      "items_with_options": [
+        {
+          "text": "Where should the web server be located in this architecture to minimize risk while allowing public access?",
+          "options": [
+            "Internal LAN",
+            "DMZ",
+            "Outside the Firewall",
+            "IN the IPS Segment"
+          ]
+        },
+        {
+          "text": "What device is best positioned between the DMZ and internal LAN to stop suspicious traffic before reaching sensitive systems?",
+          "options": [
+            "IDS",
+            "Router",
+            "IPS",
+            "Proxy"
+          ]
+        },
+        {
+          "text": "You want to create firewall rules allowing only HTTPS access to the web server. Enter the port number used by this protocol.",
+          "options": [
+            "80",
+            "20",
+            "23",
+            "443"
+          ]
+        },
+        {
+          "text": "The IT director asks where to place the internal database server for maximum protection. What is the correct action?",
+          "options": [
+            "Place it in the DMZ",
+            "Place it in the Cloud",
+            "Place it on the internal LAN and block DMZ access to it",
+            "Connect it to the web server directly"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "DMZ",
+        "1": "IPS",
+        "2": "443",
+        "3": "Place it on the internal LAN and block DMZ access to it"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_4_20251013_075902.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: As part of an internal audit, your company has asked you to assess whether systems have been configured according to secure design principles. These include reducing the attack surface, enforcing least privilege, and ensuring secure defaults. You must apply these principles across servers and user devices in a Windows-based environment.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Disable the account or rename it",
+      "1": "Least privilege",
+      "2": "FTP",
+      "3": "Change permissions to read-only for specific groups"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "As part of an internal audit, your company has asked you to assess whether systems have been configured according to secure design principles. These include reducing the attack surface, enforcing least privilege, and ensuring secure defaults. You must apply these principles across servers and user devices in a Windows-based environment.",
+      "items_with_options": [
+        {
+          "text": "You notice that the local administrator account is enabled by default on all new machines. What should you do to follow secure configuration principles?",
+          "options": [
+            "Delete the admin account",
+            "Leave it active in case of lockout",
+            "Disable the account or rename it",
+            "Add it to the Guest group"
+          ]
+        },
+        {
+          "text": "Many employees are members of the “Power Users” group despite not needing elevated access. What principle should guide your action?",
+          "options": [
+            "Separation of duties",
+            "Least privilege",
+            "Defense in depth",
+            "Availablity"
+          ]
+        },
+        {
+          "text": "You are tasked with disabling unnecessary services on all workstations. Enter the name of one insecure service mentioned that should be disabled.",
+          "options": [
+            "SSH",
+            "FTP",
+            "HTTPS",
+            "SFTP"
+          ]
+        },
+        {
+          "text": "A shared folder is configured with “Everyone: Full Control” permissions. What change would best reduce its attack surface?",
+          "options": [
+            "Encrypt the entire data",
+            "Move the folder to a DMZ",
+            "Change permissions to read-only for specific groups",
+            "Add more users to the Everyone group"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Disable the account or rename it",
+        "1": "Least privilege",
+        "2": "FTP",
+        "3": "Change permissions to read-only for specific groups"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_5_20251013_080810.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: You are part of the SOC (Security Operations Center) at a regional retail company. Your SIEM system triggers a critical alert: multiple failed login attempts followed by a successful login on a domain administrator account from an unusual IP address outside of business hours. Your job is to follow the appropriate steps in the incident response process and help your team investigate the situation.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Security",
+      "1": "Disable the compromised account and isolate the system",
+      "2": "Authentication logs",
+      "3": "Conduct a lesson-learned session and update the procedures"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "You are part of the SOC (Security Operations Center) at a regional retail company. Your SIEM system triggers a critical alert: multiple failed login attempts followed by a successful login on a domain administrator account from an unusual IP address outside of business hours. Your job is to follow the appropriate steps in the incident response process and help your team investigate the situation.",
+      "items_with_options": [
+        {
+          "text": "You want to investigate failed logon attempts using Windows event logs. Which of the following Event Viewer log types would you review to find this information?",
+          "options": [
+            "System",
+            "Setup",
+            "Security",
+            "Application"
+          ]
+        },
+        {
+          "text": "What should you do first upon confirming the unauthorized login?",
+          "options": [
+            "Erase all affected systems",
+            "Notify local law enforcement",
+            "Disable the compromised account and isolate the system",
+            "Restore the back up"
+          ]
+        },
+        {
+          "text": "During identification, which log type would best help determine how the attacker gained access?",
+          "options": [
+            "Web proxy logs",
+            "Application logs",
+            "Authentication logs",
+            "Print server logs"
+          ]
+        },
+        {
+          "text": "What is the last step you and your team should perform after resolving the incident?",
+          "options": [
+            "Re-enable the admin account",
+            "Block all external IPs permanently",
+            "Conduct a lesson-learned session and update the procedures",
+            "Format all domain controllers"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Security",
+        "1": "Disable the compromised account and isolate the system",
+        "2": "Authentication logs",
+        "3": "Conduct a lesson-learned session and update the procedures"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_6_20251013_081540.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: You are assisting in a forensic investigation after an insider threat incident was reported at a software development firm. A developer is suspected of copying proprietary code to a USB drive. Your job is to properly preserve digital evidence and maintain the chain of custody to ensure it is admissible if legal action is pursued.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Connect it to a  write blocker and make a forensic image",
+      "1": "Chain-of-custody log entry",
+      "2": "dd",
+      "3": "To ensure evidence remains legally admissible"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "You are assisting in a forensic investigation after an insider threat incident was reported at a software development firm. A developer is suspected of copying proprietary code to a USB drive. Your job is to properly preserve digital evidence and maintain the chain of custody to ensure it is admissible if legal action is pursued.",
+      "items_with_options": [
+        {
+          "text": "What should you do first when handling the suspect USB drive?",
+          "options": [
+            "Plug it in your analysis machine",
+            "Connect it to a  write blocker and make a forensic image",
+            "Copy all files to a back up folder",
+            "View contents using file explorer"
+          ]
+        },
+        {
+          "text": "What must you include each time the evidence changes hands?",
+          "options": [
+            "Chain-of-custody log entry",
+            "Storage temperature",
+            "Encryption key",
+            "Incident response steps"
+          ]
+        },
+        {
+          "text": "You are creating a forensic image of the drive. Enter the Linux command to create a bit-level copy:",
+          "options": [
+            "dd",
+            "df",
+            "rm",
+            "dup"
+          ]
+        },
+        {
+          "text": "What is the primary reason for preserving the chain of custody in a forensic investigation?",
+          "options": [
+            "Increase performance of imaging tools",
+            "To ensure evidence remains legally admissible",
+            "To limit system downtime",
+            "To provide justification for employee termination"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Connect it to a  write blocker and make a forensic image",
+        "1": "Chain-of-custody log entry",
+        "2": "dd",
+        "3": "To ensure evidence remains legally admissible"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_7_20251013_082520.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: You’re working as a cybersecurity consultant for a government agency that has recently adopted the NIST Cybersecurity Framework. Your role is to help them translate broad framework functions into specific internal policies, procedures, and standards. You are also tasked with reviewing existing documents to ensure they align with security governance best practices.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Protect",
+      "1": "Procedure",
+      "2": "Policy",
+      "3": "Protect"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "You’re working as a cybersecurity consultant for a government agency that has recently adopted the NIST Cybersecurity Framework. Your role is to help them translate broad framework functions into specific internal policies, procedures, and standards. You are also tasked with reviewing existing documents to ensure they align with security governance best practices.",
+      "items_with_options": [
+        {
+          "text": "You are reviewing the \"Data Backup and Retention Schedule.\" Which NIST CSF function does this primarily support?",
+          "options": [
+            "Identify",
+            "Protect",
+            "Respond",
+            "Recover"
+          ]
+        },
+        {
+          "text": "The agency asks for a document outlining how users must handle data. What type of governance document should you create?",
+          "options": [
+            "Standard",
+            "Policy",
+            "Procedure",
+            "Guideline"
+          ]
+        },
+        {
+          "text": "You’re reviewing a document with this purpose: \"All employees must use unique, complex passwords and never reuse them across services.\" What kind of governance document is this?",
+          "options": [
+            "Policy",
+            "Standard",
+            "Procedure",
+            "Risk REgister"
+          ]
+        },
+        {
+          "text": "Select one of the five core functions of the NIST Cybersecurity Framework.",
+          "options": [
+            "Identity",
+            "Protect",
+            "Procedure",
+            "Encrypt"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Protect",
+        "1": "Procedure",
+        "2": "Policy",
+        "3": "Protect"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_8_20251013_112116.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Your organization is onboarding a new cloud-based payroll provider. Before finalizing the agreement, the legal and cybersecurity teams ask you to assess the third-party risk and ensure appropriate controls are in place. You’ll review contracts, evaluate access control policies, and ensure alignment with compliance requirements like GDPR and HIPAA.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Data Processing Agreement",
+      "1": "Audit report or Security certification",
+      "2": "Notify Customers within 72hrs",
+      "3": "HIPPA"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Your organization is onboarding a new cloud-based payroll provider. Before finalizing the agreement, the legal and cybersecurity teams ask you to assess the third-party risk and ensure appropriate controls are in place. You’ll review contracts, evaluate access control policies, and ensure alignment with compliance requirements like GDPR and HIPAA.",
+      "items_with_options": [
+        {
+          "text": "What type of document are you reviewing that defines roles, responsibilities, and breach notification timelines?",
+          "options": [
+            "NDA",
+            "SLA",
+            "Security Policy",
+            "Data Processing Agreement"
+          ]
+        },
+        {
+          "text": "To assess if the third party will maintain proper security controls, what type of evidence should you request?",
+          "options": [
+            "Welcome email",
+            "Software license",
+            "Audit report or Security certification",
+            "Press release"
+          ]
+        },
+        {
+          "text": "What key requirement must the vendor meet under GDPR after detecting a breach?",
+          "options": [
+            "Notify Customers within 72hrs",
+            "Notify local law enforcement",
+            "Wait until incident is resolved",
+            "Offer credit monitoring immediately"
+          ]
+        },
+        {
+          "text": "Enter the name of one compliance framework that applies when handling employee healthcare records.",
+          "options": [
+            "NIST",
+            "HIPPA",
+            "PCI DSS",
+            "GPDR"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Data Processing Agreement",
+        "1": "Audit report or Security certification",
+        "2": "Notify Customers within 72hrs",
+        "3": "HIPPA"
+      },
+      "is_multi_select": false,
+      "use_different_options": true
+    },
+    "scenario_image_filename": "pbq_image_9_20251013_113151.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the description with the most accurate attack type. Not all attack types will be used.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Vishing",
+      "1": "Injection",
+      "2": "On-path",
+      "3": "DDoS",
+      "4": "Keylogger"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the description with the most accurate attack type. Not all attack types will be used.",
+      "items_with_options": [
+        {
+          "text": "Attacker obtains bank account number by calling victim",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Injection",
+            "RFID cloning",
+            "Vishing",
+            "DDoS",
+            "Supply chain"
+          ]
+        },
+        {
+          "text": "Attacker accesses database from web browser",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Injection",
+            "RFID cloning",
+            "Vishing",
+            "DDoS",
+            "Supply chain"
+          ]
+        },
+        {
+          "text": "Attacker intercepts client-server communication",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Injection",
+            "RFID cloning",
+            "Vishing",
+            "DDoS",
+            "Supply chain"
+          ]
+        },
+        {
+          "text": "Multiple attackers overwhelm web server",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Injection",
+            "RFID cloning",
+            "Vishing",
+            "DDoS",
+            "Supply chain"
+          ]
+        },
+        {
+          "text": "Attacker obtains login credentials",
+          "options": [
+            "On-path",
+            "Keylogger",
+            "Rootkit",
+            "Injection",
+            "RFID cloning",
+            "Vishing",
+            "DDoS",
+            "Supply chain"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Vishing",
+        "1": "Injection",
+        "2": "On-path",
+        "3": "DDoS",
+        "4": "Keylogger"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: The security team at a manufacturing company is creating a set of \nsecurity standards for employees and visitors. \nSelect the BEST security control for each location. \nAll of the available security controls will be used once. ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": [
+        "Fencing",
+        "Lighting"
+      ],
+      "1": [
+        "Access control vestibule",
+        "Security guard"
+      ],
+      "2": [
+        "Access badge",
+        "Biometrics"
+      ],
+      "3": [
+        "Authentication token"
+      ]
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "The security team at a manufacturing company is creating a set of \nsecurity standards for employees and visitors. \nSelect the BEST security control for each location. \nAll of the available security controls will be used once. ",
+      "items_with_options": [
+        {
+          "text": "Outside Building: Parking and Visitor drop-off (Choose 2)",
+          "options": [
+            "Access badge",
+            "Fencing",
+            "Access control vestibule",
+            "Security guard",
+            "Authentication token",
+            "Biometrics",
+            "Lighting"
+          ]
+        },
+        {
+          "text": "Reception: Building lobby (Choose 2)",
+          "options": [
+            "Access badge",
+            "Fencing",
+            "Access control vestibule",
+            "Security guard",
+            "Authentication token",
+            "Biometrics",
+            "Lighting"
+          ]
+        },
+        {
+          "text": "Data Centre Door: Entrance from inside building (Choose 2)",
+          "options": [
+            "Access badge",
+            "Fencing",
+            "Access control vestibule",
+            "Security guard",
+            "Authentication token",
+            "Biometrics",
+            "Lighting"
+          ]
+        },
+        {
+          "text": "Server Administration: Authentication to  server console in the data centre (Choose 1)",
+          "options": [
+            "Access badge",
+            "Fencing",
+            "Access control vestibule",
+            "Security guard",
+            "Authentication token",
+            "Biometrics",
+            "Lighting"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": [
+          "Fencing",
+          "Lighting"
+        ],
+        "1": [
+          "Access control vestibule",
+          "Security guard"
+        ],
+        "2": [
+          "Access badge",
+          "Biometrics"
+        ],
+        "3": [
+          "Authentication token"
+        ]
+      },
+      "is_multi_select": true,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Select the most appropriate security category. \nSome categories may be used more than once.",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Operational",
+      "1": "Managerial",
+      "2": "Physical",
+      "3": "Physical",
+      "4": "Technical"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Select the most appropriate security category. \nSome categories may be used more than once.",
+      "items_with_options": [
+        {
+          "text": "A guard checks the identification of all visitors",
+          "options": [
+            "Technical",
+            "Managerial",
+            "Operational",
+            "Physical"
+          ]
+        },
+        {
+          "text": "All returns must be approved by a Vice President",
+          "options": [
+            "Technical",
+            "Managerial",
+            "Operational",
+            "Physical"
+          ]
+        },
+        {
+          "text": "A generator is used during a power outage",
+          "options": [
+            "Technical",
+            "Managerial",
+            "Operational",
+            "Physical"
+          ]
+        },
+        {
+          "text": "Building doors can be unlocked with an access card",
+          "options": [
+            "Technical",
+            "Managerial",
+            "Operational",
+            "Physical"
+          ]
+        },
+        {
+          "text": "System logs are transferred automatically to a SIEM",
+          "options": [
+            "Technical",
+            "Managerial",
+            "Operational",
+            "Physical"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Operational",
+        "1": "Managerial",
+        "2": "Physical",
+        "3": "Physical",
+        "4": "Technical"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the appropriate authentication factor to each description. \nEach authentication factor will be used once. ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Something you have",
+      "1": "Something you know",
+      "2": "Something you are",
+      "3": "Somewhere you are"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the appropriate authentication factor to each description. \nEach authentication factor will be used once. ",
+      "items_with_options": [
+        {
+          "text": "During the login process, your phone receives a text message with a one-time passcode",
+          "options": [
+            "Something you know",
+            "Something you are",
+            "Something you have",
+            "Somewhere you are"
+          ]
+        },
+        {
+          "text": "You enter your PIN to make a deposit into an ATM",
+          "options": [
+            "Something you know",
+            "Something you are",
+            "Something you have",
+            "Somewhere you are"
+          ]
+        },
+        {
+          "text": "You can use your fingerprint to unlock the door to the data centre",
+          "options": [
+            "Something you know",
+            "Something you are",
+            "Something you have",
+            "Somewhere you are"
+          ]
+        },
+        {
+          "text": "Your login will not work unless you are connected to the VPN",
+          "options": [
+            "Something you know",
+            "Something you are",
+            "Something you have",
+            "Somewhere you are"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Something you have",
+        "1": "Something you know",
+        "2": "Something you are",
+        "3": "Somewhere you are"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Firewall Rules",
+    "scenario": "PBQ Instructions:  Configure the following stateful firewall rules: \n\n(1)Block HTTP sessions between the Web Server and the Database Server \n\n(2) Allow the Storage Server to transfer files to the Video Server over HTTPS \n\n(3)Allow the Management Server to use a secure terminal on the File Server ",
+    "question": "PBQ: Firewall Rules",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0_rule": "1",
+      "0_source_ip": "10.1.1.2",
+      "0_dest_ip": "10.2.1.20",
+      "0_protocol": "TCP",
+      "0_port": "80",
+      "0_action": "Block",
+      "1_rule": "2",
+      "1_source_ip": "10.2.1.33",
+      "1_dest_ip": "10.1.1.7",
+      "1_protocol": "TCP",
+      "1_port": "443",
+      "1_action": "Allow",
+      "2_rule": "3",
+      "2_source_ip": "10.2.1.47",
+      "2_dest_ip": "10.1.1.3",
+      "2_protocol": "TCP",
+      "2_port": "22",
+      "2_action": "Allow"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": " Configure the following stateful firewall rules: \n\n(1)Block HTTP sessions between the Web Server and the Database Server \n\n(2) Allow the Storage Server to transfer files to the Video Server over HTTPS \n\n(3)Allow the Management Server to use a secure terminal on the File Server ",
+      "firewall_rules": [
+        {
+          "rule_options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "source_ip_options": [
+            "10.1.1.2",
+            "10.2.1.33",
+            "10.2.1.47"
+          ],
+          "dest_ip_options": [
+            "10.1.1.3",
+            "10.1.1.7",
+            "10.2.1.20"
+          ],
+          "protocol_options": [
+            "TCP",
+            "UDP"
+          ],
+          "port_options": [
+            "22",
+            "80",
+            "443"
+          ],
+          "action_options": [
+            "Allow",
+            "Block"
+          ],
+          "correct_rule": "1",
+          "correct_source_ip": "10.1.1.2",
+          "correct_dest_ip": "10.2.1.20",
+          "correct_protocol": "TCP",
+          "correct_port": "80",
+          "correct_action": "Block"
+        },
+        {
+          "rule_options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "source_ip_options": [
+            "10.1.1.2",
+            "10.2.1.33",
+            "10.2.1.47"
+          ],
+          "dest_ip_options": [
+            "10.1.1.3",
+            "10.1.1.7",
+            "10.2.1.20"
+          ],
+          "protocol_options": [
+            "TCP",
+            "UDP"
+          ],
+          "port_options": [
+            "22",
+            "80",
+            "443"
+          ],
+          "action_options": [
+            "Allow",
+            "Block"
+          ],
+          "correct_rule": "2",
+          "correct_source_ip": "10.2.1.33",
+          "correct_dest_ip": "10.1.1.7",
+          "correct_protocol": "TCP",
+          "correct_port": "443",
+          "correct_action": "Allow"
+        },
+        {
+          "rule_options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "source_ip_options": [
+            "10.1.1.2",
+            "10.2.1.33",
+            "10.2.1.47"
+          ],
+          "dest_ip_options": [
+            "10.1.1.3",
+            "10.1.1.7",
+            "10.2.1.20"
+          ],
+          "protocol_options": [
+            "TCP",
+            "UDP"
+          ],
+          "port_options": [
+            "22",
+            "80",
+            "443"
+          ],
+          "action_options": [
+            "Allow",
+            "Block"
+          ],
+          "correct_rule": "3",
+          "correct_source_ip": "10.2.1.47",
+          "correct_dest_ip": "10.1.1.3",
+          "correct_protocol": "TCP",
+          "correct_port": "22",
+          "correct_action": "Allow"
+        }
+      ],
+      "correct_answers": {
+        "0_rule": "1",
+        "0_source_ip": "10.1.1.2",
+        "0_dest_ip": "10.2.1.20",
+        "0_protocol": "TCP",
+        "0_port": "80",
+        "0_action": "Block",
+        "1_rule": "2",
+        "1_source_ip": "10.2.1.33",
+        "1_dest_ip": "10.1.1.7",
+        "1_protocol": "TCP",
+        "1_port": "443",
+        "1_action": "Allow",
+        "2_rule": "3",
+        "2_source_ip": "10.2.1.47",
+        "2_dest_ip": "10.1.1.3",
+        "2_protocol": "TCP",
+        "2_port": "22",
+        "2_action": "Allow"
+      },
+      "items_with_options": []
+    },
+    "scenario_image_filename": "pbq_image_14_20251013_114346.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the certificate characteristic to the description: ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "CRL",
+      "1": "CSP",
+      "2": "CA",
+      "3": "OCSP"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the certificate characteristic to the description: ",
+      "items_with_options": [
+        {
+          "text": "A list of invalidated certificates",
+          "options": [
+            "CRL",
+            "OCSP",
+            "CA",
+            "CSP"
+          ]
+        },
+        {
+          "text": "Send the public key to be signed",
+          "options": [
+            "CRL",
+            "OCSP",
+            "CA",
+            "CSP"
+          ]
+        },
+        {
+          "text": "Deploy and manage certificates",
+          "options": [
+            "CRL",
+            "OCSP",
+            "CA",
+            "CSP"
+          ]
+        },
+        {
+          "text": "The browser checks for a revoked certificate",
+          "options": [
+            "CRL",
+            "OCSP",
+            "CA",
+            "CSP"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "CRL",
+        "1": "CSP",
+        "2": "CA",
+        "3": "OCSP"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: An organization is deploying a mobile app to its sales team in the field. \nThe application will be accessed from tablets for remote team members \nand a browser-based front-end on desktops for corporate office users. \n\nThe application contains sensitive customer information, and two forms of \nauthentication are required to launch the application. \n\nSelect the best security features for each platform. A security feature will \nonly be used once. Not all security features will be used. ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": [
+        "MDM Integration",
+        "Full device encryption",
+        "Biometric authentication"
+      ],
+      "1": [
+        "Host-based firewall",
+        "Anti-malware"
+      ]
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "An organization is deploying a mobile app to its sales team in the field. \nThe application will be accessed from tablets for remote team members \nand a browser-based front-end on desktops for corporate office users. \n\nThe application contains sensitive customer information, and two forms of \nauthentication are required to launch the application. \n\nSelect the best security features for each platform. A security feature will \nonly be used once. Not all security features will be used. ",
+      "items_with_options": [
+        {
+          "text": "Tablet for Field Sales (Choose 3)",
+          "options": [
+            "Host-based firewall",
+            "MDM Integration",
+            "Infrared sensors",
+            "Anti-malware",
+            "OSINT",
+            "Full device encryption",
+            "Biometric authentication"
+          ]
+        },
+        {
+          "text": "Desktop with Browser-based Front-end (Choose 2)",
+          "options": [
+            "Host-based firewall",
+            "MDM Integration",
+            "Infrared sensors",
+            "Anti-malware",
+            "OSINT",
+            "Full device encryption",
+            "Biometric authentication"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": [
+          "MDM Integration",
+          "Full device encryption",
+          "Biometric authentication"
+        ],
+        "1": [
+          "Host-based firewall",
+          "Anti-malware"
+        ]
+      },
+      "is_multi_select": true,
+      "use_different_options": false
+    },
+    "scenario_image_filename": "pbq_image_16_20251013_115112.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Place the incident response activities in the correct order: ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Preparation",
+      "1": "Detection",
+      "2": "Analysis",
+      "3": "Containment",
+      "4": "Eradication",
+      "5": "Recovery",
+      "6": "Lessons learned"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Place the incident response activities in the correct order: ",
+      "items_with_options": [
+        {
+          "text": "#1",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        },
+        {
+          "text": "#2",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        },
+        {
+          "text": "#3",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        },
+        {
+          "text": "#4",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        },
+        {
+          "text": "#5",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        },
+        {
+          "text": "#6",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        },
+        {
+          "text": "#7",
+          "options": [
+            "Eradication",
+            "Recovery",
+            "Preparation",
+            "Analysis",
+            "Containment",
+            "Lessons learned",
+            "Detection"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Preparation",
+        "1": "Detection",
+        "2": "Analysis",
+        "3": "Containment",
+        "4": "Eradication",
+        "5": "Recovery",
+        "6": "Lessons learned"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the security technology to the implementation: ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Hashing",
+      "1": "Digital Signature",
+      "2": "SPF",
+      "3": "Key escrow",
+      "4": "Journaling",
+      "5": "Obfuscation"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the security technology to the implementation: ",
+      "items_with_options": [
+        {
+          "text": "Store a password on an authentication server",
+          "options": [
+            "Digital Signature",
+            "Obfuscation",
+            "Key escrow",
+            "Journaling",
+            "Hashing",
+            "SPF"
+          ]
+        },
+        {
+          "text": "Verify a sender’s identity",
+          "options": [
+            "Digital Signature",
+            "Obfuscation",
+            "Key escrow",
+            "Journaling",
+            "Hashing",
+            "SPF"
+          ]
+        },
+        {
+          "text": "Authenticate the server sending an email",
+          "options": [
+            "Digital Signature",
+            "Obfuscation",
+            "Key escrow",
+            "Journaling",
+            "Hashing",
+            "SPF"
+          ]
+        },
+        {
+          "text": "Store keys with a third-party",
+          "options": [
+            "Digital Signature",
+            "Obfuscation",
+            "Key escrow",
+            "Journaling",
+            "Hashing",
+            "SPF"
+          ]
+        },
+        {
+          "text": "Prevent data corruption when a system fails",
+          "options": [
+            "Digital Signature",
+            "Obfuscation",
+            "Key escrow",
+            "Journaling",
+            "Hashing",
+            "SPF"
+          ]
+        },
+        {
+          "text": "Modify a script to make it difficult to understand",
+          "options": [
+            "Digital Signature",
+            "Obfuscation",
+            "Key escrow",
+            "Journaling",
+            "Hashing",
+            "SPF"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Hashing",
+        "1": "Digital Signature",
+        "2": "SPF",
+        "3": "Key escrow",
+        "4": "Journaling",
+        "5": "Obfuscation"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Select the data state that best fits the description. \nEach data state will be used more than once. ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Data in-transit",
+      "1": "Data in-transit",
+      "2": "Data at-rest",
+      "3": "Data in-use",
+      "4": "Data in-use",
+      "5": "Data in-transit",
+      "6": "Data in-use",
+      "7": "Data in-use",
+      "8": "Data at-rest",
+      "9": "Data at-rest"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Select the data state that best fits the description. \nEach data state will be used more than once. ",
+      "items_with_options": [
+        {
+          "text": "All switches in a data centre are connected with an 802.1Q trunk",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "Sales information is uploaded daily from a remote site using a satellite network",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "A company stores customer purchase information in a MySQL database",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "An application decrypts credit card numbers and expiration dates to validate for approval",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "An authentication program performs a hash of all passwords",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "An IPS identifies a SQL injection attack and removes the attack frames from the network",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "An automatic teller machine validates a user’s PIN before allowing a deposit",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "Each time a spreadsheet is updated, all of the cells containing formulas are automatically updated",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "All weekly backup tapes are transported to an offsite storage facility",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        },
+        {
+          "text": "All user spreadsheets are stored on a cloud-based file sharing service",
+          "options": [
+            "Data in-transit",
+            "Data at-rest",
+            "Data in-use"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Data in-transit",
+        "1": "Data in-transit",
+        "2": "Data at-rest",
+        "3": "Data in-use",
+        "4": "Data in-use",
+        "5": "Data in-transit",
+        "6": "Data in-use",
+        "7": "Data in-use",
+        "8": "Data at-rest",
+        "9": "Data at-rest"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Refer to the following firewall rules - \nCategorize the following traffic flows as ALLOWED or BLOCKED through the firewall:",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "ALLOWED",
+      "1": "BLOCKED",
+      "2": "ALLOWED",
+      "3": "ALLOWED",
+      "4": "BLOCKED",
+      "5": "ALLOWED"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Refer to the following firewall rules - \nCategorize the following traffic flows as ALLOWED or BLOCKED through the firewall:",
+      "items_with_options": [
+        {
+          "text": "Use a secure terminal to connect to 10.1.10.88",
+          "options": [
+            "ALLOWED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "text": "Share the desktop on server 10.1.10.120",
+          "options": [
+            "ALLOWED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "text": "Perform a DNS query from 10.1.10.88 to 9.9.9.9",
+          "options": [
+            "ALLOWED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "text": "View web pages on 10.1.10.120",
+          "options": [
+            "ALLOWED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "text": "Authenticate to an LDAP server at 10.1.10.61",
+          "options": [
+            "ALLOWED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "text": "Synchronize the clock on a server at 10.1.10.17",
+          "options": [
+            "ALLOWED",
+            "BLOCKED"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "ALLOWED",
+        "1": "BLOCKED",
+        "2": "ALLOWED",
+        "3": "ALLOWED",
+        "4": "BLOCKED",
+        "5": "ALLOWED"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": "pbq_image_20_20251013_125336.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the device to the description. Some device types will not be used",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "IPS",
+      "1": "Proxy Server",
+      "2": "Router",
+      "3": "Load Balancer",
+      "4": "WAF"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the device to the description. Some device types will not be used",
+      "items_with_options": [
+        {
+          "text": "Block SQL injection over an Internet connection",
+          "options": [
+            "WAF",
+            "Proxy Server",
+            "Load Balancer",
+            "Sensor",
+            "MDM",
+            "Router",
+            "Jump server",
+            "IPS"
+          ]
+        },
+        {
+          "text": "Intercept all browser requests and cache the results",
+          "options": [
+            "WAF",
+            "Proxy Server",
+            "Load Balancer",
+            "Sensor",
+            "MDM",
+            "Router",
+            "Jump server",
+            "IPS"
+          ]
+        },
+        {
+          "text": "Forward packets between separate VLANs",
+          "options": [
+            "WAF",
+            "Proxy Server",
+            "Load Balancer",
+            "Sensor",
+            "MDM",
+            "Router",
+            "Jump server",
+            "IPS"
+          ]
+        },
+        {
+          "text": "Configure a group of redundant web servers",
+          "options": [
+            "WAF",
+            "Proxy Server",
+            "Load Balancer",
+            "Sensor",
+            "MDM",
+            "Router",
+            "Jump server",
+            "IPS"
+          ]
+        },
+        {
+          "text": "Evaluate the input to a browser-based application",
+          "options": [
+            "WAF",
+            "Proxy Server",
+            "Load Balancer",
+            "Sensor",
+            "MDM",
+            "Router",
+            "Jump server",
+            "IPS"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "IPS",
+        "1": "Proxy Server",
+        "2": "Router",
+        "3": "Load Balancer",
+        "4": "WAF"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the attack type to the characteristic: ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "DDoS",
+      "1": "Replay",
+      "2": "Rootkit",
+      "3": "Brute force",
+      "4": "Phishing",
+      "5": "Injection"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the attack type to the characteristic: ",
+      "items_with_options": [
+        {
+          "text": "A website stops responding to normal requests",
+          "options": [
+            "Phishing",
+            "Brute force",
+            "Replay",
+            "Rootkit",
+            "Injection",
+            "DDoS"
+          ]
+        },
+        {
+          "text": "Data is captured and retransmitted to a server",
+          "options": [
+            "Phishing",
+            "Brute force",
+            "Replay",
+            "Rootkit",
+            "Injection",
+            "DDoS"
+          ]
+        },
+        {
+          "text": "The malware is designed to remain hidden on a  computer system",
+          "options": [
+            "Phishing",
+            "Brute force",
+            "Replay",
+            "Rootkit",
+            "Injection",
+            "DDoS"
+          ]
+        },
+        {
+          "text": "A list of passwords are attempted with a known username",
+          "options": [
+            "Phishing",
+            "Brute force",
+            "Replay",
+            "Rootkit",
+            "Injection",
+            "DDoS"
+          ]
+        },
+        {
+          "text": "An email link redirects a user to a site that requests login credentials",
+          "options": [
+            "Phishing",
+            "Brute force",
+            "Replay",
+            "Rootkit",
+            "Injection",
+            "DDoS"
+          ]
+        },
+        {
+          "text": "Permissions are circumvented by adding additional  code as application input",
+          "options": [
+            "Phishing",
+            "Brute force",
+            "Replay",
+            "Rootkit",
+            "Injection",
+            "DDoS"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "DDoS",
+        "1": "Replay",
+        "2": "Rootkit",
+        "3": "Brute force",
+        "4": "Phishing",
+        "5": "Injection"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the cryptography technology to the description: ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "Key stretching",
+      "1": "Steganography",
+      "2": "Collision",
+      "3": "masking",
+      "4": "Asymmetric",
+      "5": "Salting"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the cryptography technology to the description: ",
+      "items_with_options": [
+        {
+          "text": "Create a stronger key using multiple processes",
+          "options": [
+            "Salting",
+            "Collision",
+            "Asymmetric",
+            "Key stretching",
+            "Steganography",
+            "masking"
+          ]
+        },
+        {
+          "text": "Data is hidden within another media type",
+          "options": [
+            "Salting",
+            "Collision",
+            "Asymmetric",
+            "Key stretching",
+            "Steganography",
+            "masking"
+          ]
+        },
+        {
+          "text": "Different inputs create the same hash",
+          "options": [
+            "Salting",
+            "Collision",
+            "Asymmetric",
+            "Key stretching",
+            "Steganography",
+            "masking"
+          ]
+        },
+        {
+          "text": "Sensitive data is hidden from view",
+          "options": [
+            "Salting",
+            "Collision",
+            "Asymmetric",
+            "Key stretching",
+            "Steganography",
+            "masking"
+          ]
+        },
+        {
+          "text": "A different key is used for decryption than encryption",
+          "options": [
+            "Salting",
+            "Collision",
+            "Asymmetric",
+            "Key stretching",
+            "Steganography",
+            "masking"
+          ]
+        },
+        {
+          "text": "Information is added to make a unique hash",
+          "options": [
+            "Salting",
+            "Collision",
+            "Asymmetric",
+            "Key stretching",
+            "Steganography",
+            "masking"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "Key stretching",
+        "1": "Steganography",
+        "2": "Collision",
+        "3": "masking",
+        "4": "Asymmetric",
+        "5": "Salting"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Add the most applicable security technologies to the following scenarios: ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": "VPN",
+      "1": "Sandboxing",
+      "2": "NGFW",
+      "3": "SD-WAN",
+      "4": "802.1X"
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Add the most applicable security technologies to the following scenarios: ",
+      "items_with_options": [
+        {
+          "text": "A field service engineer uses their corporate laptop at coffee shops and hotels",
+          "options": [
+            "Sandboxing",
+            "802.1X",
+            "SD-WAN",
+            "NGFW",
+            "VPN"
+          ]
+        },
+        {
+          "text": "Software developers run a series of tests before deploying an application",
+          "options": [
+            "Sandboxing",
+            "802.1X",
+            "SD-WAN",
+            "NGFW",
+            "VPN"
+          ]
+        },
+        {
+          "text": "An administrator prevents employees from visiting known-malicious web sites",
+          "options": [
+            "Sandboxing",
+            "802.1X",
+            "SD-WAN",
+            "NGFW",
+            "VPN"
+          ]
+        },
+        {
+          "text": "Directly access cloud-based services from all corporate locations",
+          "options": [
+            "Sandboxing",
+            "802.1X",
+            "SD-WAN",
+            "NGFW",
+            "VPN"
+          ]
+        },
+        {
+          "text": "Users connecting to the network should use their corporate authentication credentials",
+          "options": [
+            "Sandboxing",
+            "802.1X",
+            "SD-WAN",
+            "NGFW",
+            "VPN"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": "VPN",
+        "1": "Sandboxing",
+        "2": "NGFW",
+        "3": "SD-WAN",
+        "4": "802.1X"
+      },
+      "is_multi_select": false,
+      "use_different_options": false
+    },
+    "scenario_image_filename": null,
+    "scenario_image_type": null,
+    "has_scenario_image": false
+  },
+  {
+    "type": "PBQ - Classification/Matching",
+    "scenario": "PBQ Instructions: Match the Attack Description and Target to the -->> Attack Identified and BEST Preventive or Remediation Action\nRefer to pic for the actual PBQ ",
+    "question": "PBQ: Classification/Matching",
+    "options": [
+      "Start PBQ Exercise"
+    ],
+    "correct_answer": {
+      "0": [
+        "Botnet (Attack Identified)",
+        "Enable DDoS protection (ACTION)"
+      ],
+      "1": [
+        "RAT (Attack Identified)",
+        "Disable remote access services(ACTION)"
+      ],
+      "2": [
+        "Worm (Attack Identified)",
+        "Change the default application password(ACTION)"
+      ],
+      "3": [
+        "Keylogger (Attack Identified)",
+        "Implement 2FA using push notification(ACTION)"
+      ],
+      "4": [
+        "Backdoor (Attack Identified)",
+        "Conduct a code review(ACTION)"
+      ]
+    },
+    "explanation": "Performance-based question exercise",
+    "is_pbq": true,
+    "pbq_data": {
+      "instructions": "Match the Attack Description and Target to the -->> Attack Identified and BEST Preventive or Remediation Action\nRefer to pic for the actual PBQ ",
+      "items_with_options": [
+        {
+          "text": "Attack Des: An attacker sends multiple SYN packets from multiple sources -->> Target: Web Server",
+          "options": [
+            "Botnet (Attack Identified)",
+            "RAT (Attack Identified)",
+            "Logic Bomb (Attack Identified)",
+            "Backdoor (Attack Identified)",
+            "Virus (Attack Identified)",
+            "Spyware (Attack Identified)",
+            "Worm (Attack Identified)",
+            "Adware (Attack Identified)",
+            "Ransomware (Attack Identified)",
+            "Keylogger (Attack Identified)",
+            "Phishing (Attack Identified)",
+            "Enable DDoS protection (ACTION)",
+            "Patch vulnerable systems(ACTION)",
+            "Disable vulnerable  services(ACTION)",
+            "Change the default system password(ACTION)",
+            "Update the cryptographic algorithms(ACTION)",
+            "Change the default application password(ACTION)",
+            "Implement 2FA using push notification(ACTION)",
+            "Conduct a code review(ACTION)",
+            "implement application fuzzing(ACTION)",
+            "implement a Host-Based IPS(ACTION)",
+            "Disable remote access services(ACTION)"
+          ]
+        },
+        {
+          "text": "Attack Des: The attack establishes a connection, which allows remote commands to eb executed -->> Target: User",
+          "options": [
+            "Botnet (Attack Identified)",
+            "RAT (Attack Identified)",
+            "Logic Bomb (Attack Identified)",
+            "Backdoor (Attack Identified)",
+            "Virus (Attack Identified)",
+            "Spyware (Attack Identified)",
+            "Worm (Attack Identified)",
+            "Adware (Attack Identified)",
+            "Ransomware (Attack Identified)",
+            "Keylogger (Attack Identified)",
+            "Phishing (Attack Identified)",
+            "Enable DDoS protection (ACTION)",
+            "Patch vulnerable systems(ACTION)",
+            "Disable vulnerable  services(ACTION)",
+            "Change the default system password(ACTION)",
+            "Update the cryptographic algorithms(ACTION)",
+            "Change the default application password(ACTION)",
+            "Implement 2FA using push notification(ACTION)",
+            "Conduct a code review(ACTION)",
+            "implement application fuzzing(ACTION)",
+            "implement a Host-Based IPS(ACTION)",
+            "Disable remote access services(ACTION)"
+          ]
+        },
+        {
+          "text": "Attack Des: The attack is self propagating and  compromises a SQL database using well-known credentials as it moves through the network -->> Target: Database Server",
+          "options": [
+            "Botnet (Attack Identified)",
+            "RAT (Attack Identified)",
+            "Logic Bomb (Attack Identified)",
+            "Backdoor (Attack Identified)",
+            "Virus (Attack Identified)",
+            "Spyware (Attack Identified)",
+            "Worm (Attack Identified)",
+            "Adware (Attack Identified)",
+            "Ransomware (Attack Identified)",
+            "Keylogger (Attack Identified)",
+            "Phishing (Attack Identified)",
+            "Enable DDoS protection (ACTION)",
+            "Patch vulnerable systems(ACTION)",
+            "Disable vulnerable  services(ACTION)",
+            "Change the default system password(ACTION)",
+            "Update the cryptographic algorithms(ACTION)",
+            "Change the default application password(ACTION)",
+            "Implement 2FA using push notification(ACTION)",
+            "Conduct a code review(ACTION)",
+            "implement application fuzzing(ACTION)",
+            "implement a Host-Based IPS(ACTION)",
+            "Disable remote access services(ACTION)"
+          ]
+        },
+        {
+          "text": "Attack Des: The attacker uses hardware to remotely  monitor users' input  activity to harvest credentials-->> Target: Executive",
+          "options": [
+            "Botnet (Attack Identified)",
+            "RAT (Attack Identified)",
+            "Logic Bomb (Attack Identified)",
+            "Backdoor (Attack Identified)",
+            "Virus (Attack Identified)",
+            "Spyware (Attack Identified)",
+            "Worm (Attack Identified)",
+            "Adware (Attack Identified)",
+            "Ransomware (Attack Identified)",
+            "Keylogger (Attack Identified)",
+            "Phishing (Attack Identified)",
+            "Enable DDoS protection (ACTION)",
+            "Patch vulnerable systems(ACTION)",
+            "Disable vulnerable  services(ACTION)",
+            "Change the default system password(ACTION)",
+            "Update the cryptographic algorithms(ACTION)",
+            "Change the default application password(ACTION)",
+            "Implement 2FA using push notification(ACTION)",
+            "Conduct a code review(ACTION)",
+            "implement application fuzzing(ACTION)",
+            "implement a Host-Based IPS(ACTION)",
+            "Disable remote access services(ACTION)"
+          ]
+        },
+        {
+          "text": "Attack Des: The attacker embeds hidden access in an internally  developed application that bypasses account login  -->> Target: Application",
+          "options": [
+            "Botnet (Attack Identified)",
+            "RAT (Attack Identified)",
+            "Logic Bomb (Attack Identified)",
+            "Backdoor (Attack Identified)",
+            "Virus (Attack Identified)",
+            "Spyware (Attack Identified)",
+            "Worm (Attack Identified)",
+            "Adware (Attack Identified)",
+            "Ransomware (Attack Identified)",
+            "Keylogger (Attack Identified)",
+            "Phishing (Attack Identified)",
+            "Enable DDoS protection (ACTION)",
+            "Patch vulnerable systems(ACTION)",
+            "Disable vulnerable  services(ACTION)",
+            "Change the default system password(ACTION)",
+            "Update the cryptographic algorithms(ACTION)",
+            "Change the default application password(ACTION)",
+            "Implement 2FA using push notification(ACTION)",
+            "Conduct a code review(ACTION)",
+            "implement application fuzzing(ACTION)",
+            "implement a Host-Based IPS(ACTION)",
+            "Disable remote access services(ACTION)"
+          ]
+        }
+      ],
+      "correct_answers": {
+        "0": [
+          "Botnet (Attack Identified)",
+          "Enable DDoS protection (ACTION)"
+        ],
+        "1": [
+          "RAT (Attack Identified)",
+          "Disable remote access services(ACTION)"
+        ],
+        "2": [
+          "Worm (Attack Identified)",
+          "Change the default application password(ACTION)"
+        ],
+        "3": [
+          "Keylogger (Attack Identified)",
+          "Implement 2FA using push notification(ACTION)"
+        ],
+        "4": [
+          "Backdoor (Attack Identified)",
+          "Conduct a code review(ACTION)"
+        ]
+      },
+      "is_multi_select": true,
+      "use_different_options": false
+    },
+    "scenario_image_filename": "pbq_image_25_20251013_133616.jpg",
+    "scenario_image_type": "image/jpeg",
+    "has_scenario_image": true
+  }
+]
